@@ -1,6 +1,5 @@
 import {Game} from "../Models/game_model.js";
 import {User} from "../Models/user_model.js";
-import {GameHistory} from "../Models/game_history_model.js"
 import { Op,Sequelize} from "sequelize";
 import slugify from 'slugify';
 import unzipper from 'unzipper';
@@ -278,36 +277,6 @@ export const findSimilarGame = async (slug) => {
         });
 
         return similarGames;
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
-
-
-export const findGamesByUserHistory = async (user_id, limit, offset) => {
-    try {
-        const gameHistory = await GameHistory.findAll({
-            where: { user_id },
-            limit:limit,
-            offset:offset,
-            include: [
-                {
-                    model: Game,
-                    attributes: ['game_id', 'game_name', 'game_description', 'date_release', 'genres','image_file_path'],
-                    include:[
-                        {
-                        model: User, // Tham chiếu tới model User
-                        attributes: ['user_name'] // Chỉ lấy trường user_name
-                        },
-                    ],
-                },
-                
-            ],
-        });
-
-        // Đếm tổng số game dựa trên lịch sử của user để tính tổng số trang
-        const totalGames = await GameHistory.count({ where: { user_id } });
-        return { gameHistory, totalGames };
     } catch (error) {
         throw new Error(error.message);
     }

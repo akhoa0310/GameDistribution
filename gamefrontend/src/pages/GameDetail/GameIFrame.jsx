@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Container, Row, Col, Button, Table, Image, Alert } from 'react-bootstrap';
 
 const GameIframe = () => {
-  const {slug} = useParams(); // Lấy id từ URL
+  const { slug } = useParams(); // Lấy slug từ URL
   const [gameData, setGameData] = useState(null);
   const [error, setError] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false); // Kiểm tra trạng thái chơi
 
   useEffect(() => {
-    // Gọi API sử dụng fetch với id từ params
+    // Gọi API lấy thông tin game bằng slug
     fetch(`http://localhost:3000/api/game/${slug}`)
       .then(response => {
         if (!response.ok) {
@@ -21,108 +23,121 @@ const GameIframe = () => {
       .catch(error => {
         setError(error.message);
       });
-  }, [slug]); // Chỉ chạy lại khi id thay đổi
+  }, [slug]);
 
-  if (error) return <div>Error: {error}</div>;
-  if (!gameData) return <div>Loading...</div>;
-
-  // Style object
-  const styles = {
-    container: {
-      padding: '20px',
-      fontFamily: 'Arial, sans-serif'
-    },
-    gamePlay: {
-      marginBottom: '20px'
-    },
-    iframe: {
-      width: '100%',
-      height: '500px',
-      border: 'none'
-    },
-    table: {
-      width: '100%',
-      borderCollapse: 'collapse',
-      marginTop: '20px'
-    },
-    th: {
-      textAlign: 'left',
-      padding: '10px',
-      backgroundColor: '#f2f2f2',
-      border: '1px solid #ccc'
-    },
-    td: {
-      padding: '10px',
-      border: '1px solid #ccc'
-    },
-    img: {
-      width: '150px',
-      marginBottom: '10px'
-    },
-    heading: {
-      color: '#333',
-      fontSize: '24px',
-      marginBottom: '15px'
-    },
-    subHeading: {
-      fontSize: '20px',
-      marginBottom: '10px'
-    }
+  const handlePlayNow = () => {
+    // Gọi API thêm lịch sử chơi game
+    fetch(`http://localhost:3000/api/addhistory/${slug}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ played_time: new Date() }),
+    })
+      .then(() => {
+        setIsPlaying(true); // Chuyển sang trạng thái đang chơi
+      })
+      .catch(error => {
+        setError(error.message);
+      });
   };
 
+  if (error) return <Alert variant="danger">Error: {error}</Alert>;
+  if (!gameData) return <Alert variant="info">Loading...</Alert>;
+
   return (
-    <div style={styles.container}>
-      {/* Iframe hiển thị trò chơi */}
-      <div style={styles.gamePlay}>
-        <h3 style={styles.subHeading}>Play Game</h3>
-        <iframe 
-          src={gameData.file_path} 
-          title={gameData.game_name} 
-          style={styles.iframe}
-        />
-      </div>
+    <Container style={{ paddingTop: '20px' }}>
+      <Row className="mb-4 justify-content-center">
+        <Col xs={12} md={8} className="text-center" style={{ position: 'relative' }}>
+          {/* Hiển thị iframe trước */}
+          <iframe
+            src={gameData.file_path}
+            title={gameData.game_name}
+            style={{
+              width: '100%', // Đảm bảo iframe chiếm 100% chiều rộng của Row
+              height: '500px',
+              border: '2px solid #ccc',
+              visibility: isPlaying ? 'visible' : 'hidden', // Ẩn iframe khi chưa chơi game
+            }}
+          />
+          {/* Hình ảnh và nút play được căn lên trên iframe */}
+          {!isPlaying && (
+            <>
+              <Image
+                src={gameData.image_file_path}
+                alt={gameData.game_name}
+                fluid
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 10,
+                  width: '200px',
+                  marginBottom: '20px',
+                }}
+              />
+              <Button
+                variant="success"
+                size="lg"
+                onClick={handlePlayNow}
+                style={{
+                  position: 'absolute',
+                  top: '70%', // Dịch xuống một chút so với vị trí gốc
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex: 10,
+                }}
+              >
+                Play Now
+              </Button>
+            </>
+          )}
+        </Col>
+      </Row>
 
       {/* Bảng thông tin chi tiết của game */}
-      <div className="game-info">
-        <h3 style={styles.heading}>Game Information</h3>
-        <table style={styles.table}>
-          <tbody>
-            <tr>
-              <th style={styles.th}>Game Name:</th>
-              <td style={styles.td}>{gameData.game_name}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Description:</th>
-              <td style={styles.td}>{gameData.game_description}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Instructions:</th>
-              <td style={styles.td}>{gameData.instructions}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Release Date:</th>
-              <td style={styles.td}>{new Date(gameData.date_release).toDateString()}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Genres:</th>
-              <td style={styles.td}>{gameData.genres}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Player Count:</th>
-              <td style={styles.td}>{gameData.player_count}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Player Number:</th>
-              <td style={styles.td}>{gameData.player_number}</td>
-            </tr>
-            <tr>
-              <th style={styles.th}>Player Name:</th>
-              <td style={styles.td}>{gameData.User.user_name}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <Row>
+        <Col>
+          <h3>Game Information</h3>
+          <Table striped bordered hover>
+            <tbody>
+              <tr>
+                <th>Game Name:</th>
+                <td>{gameData.game_name}</td>
+              </tr>
+              <tr>
+                <th>Description:</th>
+                <td>{gameData.game_description}</td>
+              </tr>
+              <tr>
+                <th>Instructions:</th>
+                <td>{gameData.instructions}</td>
+              </tr>
+              <tr>
+                <th>Release Date:</th>
+                <td>{new Date(gameData.date_release).toDateString()}</td>
+              </tr>
+              <tr>
+                <th>Genres:</th>
+                <td>{gameData.genres}</td>
+              </tr>
+              <tr>
+                <th>Player Count:</th>
+                <td>{gameData.player_count}</td>
+              </tr>
+              <tr>
+                <th>Player Number:</th>
+                <td>{gameData.player_number}</td>
+              </tr>
+              <tr>
+                <th>Player Name:</th>
+                <td>{gameData.User.user_name}</td>
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

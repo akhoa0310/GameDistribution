@@ -115,7 +115,7 @@ const styles = {
     padding: '10px 0',
   },
   icon: {
-    width: '150px',
+    width: '115px',
     height: 'auto',
   }
 };

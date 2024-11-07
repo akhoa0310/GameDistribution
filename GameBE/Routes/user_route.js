@@ -2,7 +2,8 @@
 import express from 'express';
 import { registerUser, loginUser,handleUpdateUserNameOrEmail,getUserInfoById,handleUpdatePassword,handleGetAllUsers,updateUserController} from '../Controller/user_controller.js';
 import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,getGameCountByGenres,getGameCountByPlayerNumber,
-    getGameCountByUser,createGame,getSimilarGames,getGamesByUserHistory,handleUpdateGame, getGamesByUserId,downloadGameFolder} from '../Controller/game_controller.js';
+    getGameCountByUser,createGame,getSimilarGames,handleUpdateGame, getGamesByUserId,downloadGameFolder} from '../Controller/game_controller.js';
+import { getGamesByUserHistory, addGameHistoryController} from '../Controller/history_controller.js';
 import { verifyToken,checkUseJWT } from '../Middleware/JWTAction.js';
 import upload from '../Middleware/upload.js'
 const routers = express.Router();
@@ -32,7 +33,6 @@ routers.get('/games/count/users', getGameCountByUser);
 // Định nghĩa route cho API tìm game tương tự
 routers.get('/games/similar/:slug', getSimilarGames);
 
-routers.get('/gamehistory',checkUseJWT, getGamesByUserHistory);
 routers.get('/mygame',checkUseJWT, getGamesByUserId);
 // Route để lấy thông tin người dùng theo ID
 routers.get('/user/get', checkUseJWT, getUserInfoById);
@@ -46,6 +46,9 @@ routers.put('/game/update_info/:id',checkUseJWT,handleUpdateGame)
 routers.get('/users/all', handleGetAllUsers);
 // Route để cập nhật thông tin user theo ID
 routers.put('/user/update_user/:id', updateUserController);
+
+routers.post('/addhistory/:slug',checkUseJWT, addGameHistoryController);
+routers.get('/gamehistory',checkUseJWT, getGamesByUserHistory);
 
 routers.get('/game/sendgame/:game_id',downloadGameFolder)
 

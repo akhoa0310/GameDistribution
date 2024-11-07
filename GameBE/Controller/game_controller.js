@@ -1,7 +1,7 @@
 // controllers/gameController.js
 import {findGameBySlug,findAllGames,findGames,countTotalGames,findGamesbyName,countTotalGamesByName,
     countGamesByGenre, countGamesByPlayerNumber,updateGame,countGamesByUser,searchGamesWithFilters,
-    findSimilarGame,findGamesByUserHistory,findGamesByUserId,addGame,createGameZipFile, 
+    findSimilarGame,findGamesByUserId,addGame,createGameZipFile, 
     } from "../DB/Actions/game_action.js";
 
 // Hàm lấy thông tin game theo ID
@@ -156,32 +156,6 @@ export const getSimilarGames = async (req, res) => {
         res.status(200).json({
             message: 'Similar games found',
             games: similarGames,
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', error: error.message });
-    }
-};
-
-export const getGamesByUserHistory = async (req, res) => {
-    try {
-        const user_id = req.user.id;
-        const limit = parseInt(req.query.limit) || 4; // Số lượng game mỗi trang, mặc định 10
-        const page = parseInt(req.query.page) || 1;    // Trang hiện tại, mặc định là 1
-
-        // Tính offset
-        const offset = (page - 1) * limit ; // offset dựa vào chunk 4 trang
-
-        // Gọi hàm tìm game với user_id, limit và offset
-        const { gameHistory, totalGames } = await findGamesByUserHistory(user_id, limit, offset);
-
-        // Tính tổng số trang dựa vào chunk 4 trang mỗi lần
-        const totalPages = Math.ceil(totalGames / limit);
-
-        res.status(200).json({
-            currentPage: page,
-            totalPages: totalPages,
-            totalGames:totalGames,
-            games: gameHistory,
         });
     } catch (error) {
         res.status(500).json({ message: 'Internal server error', error: error.message });
