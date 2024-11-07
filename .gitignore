@@ -1,2 +1,5 @@
 
-gamefrontend/
+.env
+node_modules
+GameBE/public/games
+
