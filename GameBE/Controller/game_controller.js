@@ -1,15 +1,14 @@
 // controllers/gameController.js
-import { findGameById,findAllGames,findGames,countTotalGames,findGamesbyName,countTotalGamesByName,
-    countGamesByGenre, countGamesByPlayerNumber,updateGame,
-    countGamesByUser,searchGamesWithFilters,findSimilarGame,
-    findGamesByUserHistory,findGamesByUserId,addGame } from "../DB/Actions/game_action.js";
+import {findGameBySlug,findAllGames,findGames,countTotalGames,findGamesbyName,countTotalGamesByName,
+    countGamesByGenre, countGamesByPlayerNumber,updateGame,countGamesByUser,searchGamesWithFilters,
+    findSimilarGame,findGamesByUserHistory,findGamesByUserId,addGame,createGameZipFile, 
+    } from "../DB/Actions/game_action.js";
 
 // Hàm lấy thông tin game theo ID
-export const getGameById = async (req, res) => {
+export const getGameBySlug = async (req, res) => {
     try {
-        const { id } = req.params;
-        const game = await findGameById(id);
-
+        const {slug} = req.params;
+        const game = await findGameBySlug(slug);
         if (!game) {
             return res.status(404).json({ message: 'Game not found' });
         }
@@ -278,5 +277,16 @@ export const createGame = async (req, res) => {
     } catch (error) {
         console.error('Error creating game:', error);
         res.status(500).json({ message: 'Failed to create game', error });
+    }
+};
+
+export const downloadGameFolder = async (req, res) => {
+    const { game_id } = req.params;
+
+    try {
+        // Gọi hàm action để thực hiện logic và gửi về response
+        await createGameZipFile(game_id, res);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

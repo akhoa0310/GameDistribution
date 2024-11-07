@@ -6,11 +6,13 @@ import slugify from 'slugify';
 import unzipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
+import archiver from 'archiver';
 
 // Hàm lấy thông tin game theo ID
-export const findGameById = async (id) => {
+export const findGameBySlug = async (slug) => {
     try {
-        const game = await Game.findByPk(id,{
+        const game = await Game.findOne({
+            where: { slug: slug }, // Tìm theo trường slug
             include: [{
                 model: User, // Tham chiếu tới model User
                 attributes: ['user_name'], // Chỉ lấy trường user_name
@@ -406,3 +408,44 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
 
     return newGame;
 };
+
+
+
+
+export const createGameZipFile = async (game_id, res) => {
+    try {
+        // Tìm game trong database để lấy slug và file_path
+        const game = await Game.findByPk(game_id);
+        if (!game) {
+            throw new Error('Game not found');
+        }
+
+        const { slug, file_path } = game;
+        const gameFolderPath = path.join('public', path.dirname(file_path));
+
+        if (!fs.existsSync(gameFolderPath)) {
+            throw new Error('Game folder not found');
+        }
+
+        // Tạo file ZIP từ thư mục game
+        const zipFilePath = path.join('public/games', `${slug}.zip`);
+        const output = fs.createWriteStream(zipFilePath);
+        const archive = archiver('zip', { zlib: { level: 9 } });
+
+        output.on('close', () => console.log('ZIP file has been created'));
+        archive.on('error', (err) => { throw err });
+
+        archive.pipe(output);
+        archive.directory(gameFolderPath, false);
+        await archive.finalize();
+
+        // Sau khi tạo file ZIP, gửi nó về client
+        res.download(zipFilePath, `${slug}.zip`, (err) => {
+            if (err) console.log('Error sending the file:', err);
+            fs.unlinkSync(zipFilePath); // Xóa file ZIP sau khi gửi xong
+        });
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
