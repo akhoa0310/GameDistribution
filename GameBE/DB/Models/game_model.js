@@ -59,6 +59,11 @@ export const Game = sequelize.define('Game', {
         type: DataTypes.INTEGER,
         defaultValue: 1, // 1: active, 0: inactive
       },
+    slug: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false, // 1: active, 0: inactive
+      },
 }, {
     tableName: 'games', // Tên bảng trong cơ sở dữ liệu
     timestamps: false, // Không tự động tạo các trường createdAt và updatedAt

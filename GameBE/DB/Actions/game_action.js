@@ -355,7 +355,7 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
     const { user_id, game_name, game_description, instructions, date_release, player_number, genres } = gameData;
 
     // Tạo slug từ game_name
-    const slug = slugify(game_name, { lower: true, strict: true });
+    const slug = `${slugify(game_name, { lower: true, strict: true })}-${Date.now()}`;
 
     // Thêm game vào cơ sở dữ liệu để lấy game_id
     const newGame = await Game.create({
@@ -364,13 +364,14 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
         game_description,
         instructions,
         player_number,
-        genres
+        genres,
+        slug
     });
 
     const game_id = newGame.game_id;
 
     // Tạo thư mục đích với tên slug
-    const folderName = `${slug}-${game_id}`;
+    const folderName = `${slugify(game_name, { lower: true, strict: true })}-${game_id}`;
     const destinationPath = path.join('public/games', folderName);
 
     // Tạo thư mục đích nếu chưa tồn tại
@@ -389,11 +390,18 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
     // Xóa file zip sau khi giải nén
     fs.unlinkSync(zipFilePath);
 
+    // Sao chép file ảnh thumbnail vào thư mục đích
+    const thumbnailPath = path.join(destinationPath, 'thumbnail.png');
+    fs.copyFileSync(imageFilePath, thumbnailPath);
+
+    // Xóa file ảnh tạm sau khi sao chép
+    fs.unlinkSync(imageFilePath);
+
     // Cập nhật đường dẫn file_path và image_file_path trong cơ sở dữ liệu
     await newGame.update({
-        file_path: `/games/${folderName}/index.html`, // Cần kiểm tra lại file_path chính xác
-        image_file_path: `/games/${folderName}/thumbnail.png`, // Cần kiểm tra lại image_file_path chính xác
-        slug: folderName // Cập nhật slug
+        file_path: `/games/${folderName}/index.html`,
+        image_file_path: `/games/${folderName}/thumbnail.png`,
+        slug: folderName
     });
 
     return newGame;
