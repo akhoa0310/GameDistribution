@@ -254,18 +254,22 @@ export const countGamesByUser = async () => {
     }
 };
 
-export const findSimilarGame = async(id)=>{
+export const findSimilarGame = async (slug) => {
     try {
-        const currentGame =await Game.findByPk(id);
-        // if(!currentGame){
-        //     throw new Error(`Game with ID ${id} not found`);
-        // }
-        const currentGenres= currentGame.genres;
+        // Tìm game hiện tại dựa trên slug
+        const currentGame = await Game.findOne({ where: { slug } });
 
-        const similarGames= await Game.findAll({
+        if (!currentGame) {
+            throw new Error("Game không tồn tại.");
+        }
+
+        const currentGenres = currentGame.genres;
+
+        // Tìm các game có genres tương tự và loại trừ game hiện tại
+        const similarGames = await Game.findAll({
             where: {
                 genres: currentGenres,
-                game_id: { [Op.ne]: id } // Loại bỏ game hiện tại khỏi kết quả
+                game_id: { [Op.ne]: currentGame.game_id } // Loại bỏ game hiện tại khỏi kết quả
             },
             include: [{
                 model: User, // Tham chiếu tới model User
@@ -274,12 +278,11 @@ export const findSimilarGame = async(id)=>{
         });
 
         return similarGames;
-    }catch(error){
+    } catch (error) {
         throw new Error(error.message);
     }
-
-    
 };
+
 
 export const findGamesByUserHistory = async (user_id, limit, offset) => {
     try {
@@ -367,7 +370,8 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
         instructions,
         player_number,
         genres,
-        slug
+        slug,
+        date_release: date_release || new Date()
     });
 
     const game_id = newGame.game_id;
@@ -408,9 +412,6 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
 
     return newGame;
 };
-
-
-
 
 export const createGameZipFile = async (game_id, res) => {
     try {

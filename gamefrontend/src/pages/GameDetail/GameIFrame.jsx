@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const GameIframe = () => {
-  const { id } = useParams(); // Lấy id từ URL
+  const {slug} = useParams(); // Lấy id từ URL
   const [gameData, setGameData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Gọi API sử dụng fetch với id từ params
-    fetch(`http://localhost:3000/api/game/${id}`)
+    fetch(`http://localhost:3000/api/game/${slug}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -21,7 +21,7 @@ const GameIframe = () => {
       .catch(error => {
         setError(error.message);
       });
-  }, [id]); // Chỉ chạy lại khi id thay đổi
+  }, [slug]); // Chỉ chạy lại khi id thay đổi
 
   if (error) return <div>Error: {error}</div>;
   if (!gameData) return <div>Loading...</div>;

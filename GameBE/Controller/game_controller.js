@@ -149,12 +149,9 @@ export const getGameCountByUser = async (req, res) => {
 
 export const getSimilarGames = async (req, res) => {
     try {
-        const { id } = req.params; // Lấy ID từ URL parameter
-        const similarGames = await findSimilarGame(id); // Gọi hàm tìm game tương tự
+        const {slug} = req.params; // Lấy slug từ URL parameter
+        const similarGames = await findSimilarGame(slug); // Gọi hàm tìm game tương tự
 
-        // if (similarGames.length === 0) {
-        //     return res.status(404).json({ message: 'No similar games found' });
-        // }
 
         res.status(200).json({
             message: 'Similar games found',

@@ -42,7 +42,7 @@ const GameHistory = () => {
             title={game.Game.game_name}
             developer={game.Game.User.user_name}
             imageUrl={game.Game.image_file_path }
-            gameUrl={`${window.location.origin}/games/${game.game_id}`}
+            gameUrl={`${window.location.origin}/games/${game.slug}`}
           />
         ))}
       </div>

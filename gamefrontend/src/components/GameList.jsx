@@ -75,7 +75,7 @@ const GameList = () => {
                 ? `${backendUrl}/public${game.image_file_path}`
                 : 'public/Logo XGame/Logo_XGame-01.png'
             }
-            gameUrl={`${window.location.origin}/games/${game.game_id}`}
+            gameUrl={`${window.location.origin}/games/${game.slug}`}
           />
         ))}
       </div>

@@ -5,14 +5,14 @@ import GameBox from '../../components/GameBox'; // Đảm bảo rằng bạn đ�
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const SimilarGames = () => {
-  const { id } = useParams(); // Lấy id từ URL
+  const {slug} = useParams(); // Lấy id từ URL
   const [similarGames, setSimilarGames] = useState([]); // Tạo state lưu game tương tự
   const [loading, setLoading] = useState(true); // State để hiển thị loading
 
   useEffect(() => {
     const fetchSimilarGames = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/games/similar/${id}`); // Gọi API với id
+        const response = await fetch(`http://localhost:3000/api/games/similar/${slug}`); // Gọi API với id
         const data = await response.json();
         setSimilarGames(data.games.slice(0, 4)); // Giới hạn chỉ lấy 4 game từ dữ liệu trả về
         setLoading(false); // Tắt loading
@@ -23,7 +23,7 @@ const SimilarGames = () => {
     };
 
     fetchSimilarGames();
-  }, [id]); // Gọi lại khi id thay đổi
+  }, [slug]); // Gọi lại khi id thay đổi
 
   if (loading) {
     return <div>Loading...</div>; // Hiển thị khi đang tải
@@ -43,7 +43,7 @@ const SimilarGames = () => {
                 ? `${backendUrl}/public${game.image_file_path}`
                 : 'public/Logo XGame/Logo_XGame-01.png'
             }
-            gameUrl={`${window.location.origin}/games/${game.game_id}`}
+            gameUrl={`${window.location.origin}/games/${game.slug}`}
           />
         ))}
       </div>
