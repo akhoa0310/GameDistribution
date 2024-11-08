@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Button, Table, Image, Alert } from 'react-bootstrap';
-
+import { GameRating } from './GameRating';
+import CommentSection from './GameComment';
 const GameIframe = () => {
   const { slug } = useParams(); // Lấy slug từ URL
   const [gameData, setGameData] = useState(null);
@@ -98,6 +99,7 @@ const GameIframe = () => {
       {/* Bảng thông tin chi tiết của game */}
       <Row>
         <Col>
+          <GameRating slug={slug} />
           <h3>Game Information</h3>
           <Table striped bordered hover>
             <tbody>
@@ -137,7 +139,8 @@ const GameIframe = () => {
           </Table>
         </Col>
       </Row>
-    </Container>
+      <CommentSection slug={slug}/>
+    </Container> 
   );
 };
 

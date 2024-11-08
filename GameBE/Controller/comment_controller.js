@@ -19,6 +19,7 @@ export const addCommentController = async (req, res) => {
             data: {
                 cmt_id: comment.cmt_id,
                 user_id: comment.user_id,
+                user_name: comment.user_name, 
                 game_id: comment.game_id,
                 time: comment.time,
                 content: comment.content,

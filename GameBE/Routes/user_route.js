@@ -5,6 +5,7 @@ import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,g
     getGameCountByUser,createGame,getSimilarGames,handleUpdateGame, getGamesByUserId,downloadGameFolder} from '../Controller/game_controller.js';
 import { getGamesByUserHistory, addGameHistoryController} from '../Controller/history_controller.js';
 import { addCommentController,getCommentsBySlugController } from '../Controller/comment_controller.js';
+import { addVoteController,getAverageRatingController,getUserRatingController } from '../Controller/vote_controller.js';
 import { verifyToken,checkUseJWT } from '../Middleware/JWTAction.js';
 import upload from '../Middleware/upload.js'
 const routers = express.Router();
@@ -57,4 +58,10 @@ routers.post('/game/upgame',checkUseJWT, upload.fields([{ name: 'file_path' }, {
 
 routers.post('/games/:slug/comments',checkUseJWT, addCommentController);
 routers.get('/games/:slug/comments', getCommentsBySlugController);
+
+routers.post('/games/:slug/vote',checkUseJWT, addVoteController);
+routers.get('/games/:slug/vote', getAverageRatingController);
+routers.get('/games/:slug/user-rating',checkUseJWT, getUserRatingController);
+
+
 export default routers;
