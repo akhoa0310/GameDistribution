@@ -1,4 +1,4 @@
-// models/Comment.js
+
 import { DataTypes } from 'sequelize';
 import sequelize from '../dbClient.js'; // Kết nối đến cơ sở dữ liệu
 import { Game } from './game_model.js';
