@@ -8,60 +8,52 @@ import { addCommentController,getCommentsBySlugController } from '../Controller/
 import { addVoteController,getAverageRatingController,getUserRatingController } from '../Controller/vote_controller.js';
 import { verifyToken,checkUseJWT } from '../Middleware/JWTAction.js';
 import upload from '../Middleware/upload.js'
+
 const routers = express.Router();
 
-// Lấy thông tin game theo 
-routers.get('/game/:slug', getGameBySlug);
+routers.post('/users/register', registerUser);  // Đăng ký
+routers.post('/users/login', loginUser);        // Đăng nhập
 
-// Định nghĩa route đăng ký
-routers.post('/users/register', registerUser);
-// Định nghĩa route đăng nhập
-routers.post('/users/login', loginUser);
+// Các route user yêu cầu check JWT
+routers.get('/user/get', checkUseJWT(), getUserInfoById);  // Lấy thông tin user theo ID
+routers.put('/user/update_profile', checkUseJWT(), handleUpdateUserNameOrEmail); // Cập nhật tên/email
+routers.put('/user/change_password', checkUseJWT(), handleUpdatePassword);       // Cập nhật password
+routers.put('/user/update_user/:id', checkUseJWT([2]), updateUserController); // Cập nhật user theo ID (admin)
+routers.get('/users/all',checkUseJWT([2]), handleGetAllUsers);   // Lấy tất cả người dùng (admin)
 
-// Lấy tất cả các game
-routers.get('/gamesall', getAllGames);
-//Lấy số game theo param
-routers.get('/games', getGames);
-//Lấy số game theo tên
-routers.get('/games/search', getGamesByName);
-// API tìm game với các điều kiện và phân trang
-routers.get('/games/searchs', getGamesWithFilters);
-// API đếm số lượng game theo player_number
-routers.get('/games/count/player-number', getGameCountByPlayerNumber);
-// API đếm số lượng game theo genres
-routers.get('/games/count/genres', getGameCountByGenres);
-// API đếm số lượng game theo user_name
-routers.get('/games/count/users', getGameCountByUser);
-// Định nghĩa route cho API tìm game tương tự
-routers.get('/games/similar/:slug', getSimilarGames);
+// Game routes
+routers.get('/game/:slug', getGameBySlug);          // Lấy thông tin game theo slug
+routers.get('/gamesall', getAllGames);              // Lấy tất cả game
+routers.get('/games', getGames);                    // Lấy game theo param
+routers.get('/games/search', getGamesByName);       // Lấy game theo tên
+routers.get('/games/searchs', getGamesWithFilters); // Tìm game với các điều kiện
+routers.get('/games/count/player-number', getGameCountByPlayerNumber);  // Đếm game theo player_number
+routers.get('/games/count/genres', getGameCountByGenres);               // Đếm game theo genres
+routers.get('/games/count/users', getGameCountByUser);                  // Đếm game theo user_name
+routers.get('/games/similar/:slug', getSimilarGames);                   // Tìm game tương tự
 
-routers.get('/mygame',checkUseJWT, getGamesByUserId);
-// Route để lấy thông tin người dùng theo ID
-routers.get('/user/get', checkUseJWT, getUserInfoById);
-// Route để cập nhật tên hoặc email của người dùng
-routers.put('/user/update_profile',checkUseJWT, handleUpdateUserNameOrEmail);
-// Route để cập nhập password người dùng
-routers.put('/user/change_password',checkUseJWT, handleUpdatePassword);
-// Route để cập nhập thông tin game
-routers.put('/game/update_info/:id',checkUseJWT,handleUpdateGame)
-// Route để lấy tất cả người dùng
-routers.get('/users/all', handleGetAllUsers);
-// Route để cập nhật thông tin user theo ID
-routers.put('/user/update_user/:id', updateUserController);
+// Các route game yêu cầu check JWT
+routers.get('/mygame', checkUseJWT(), getGamesByUserId);                  // Lấy game của user
+routers.put('/game/update_info/:id', checkUseJWT([2]), handleUpdateGame);    // Cập nhật thông tin game
+routers.get('/game/sendgame/:game_id',checkUseJWT(), downloadGameFolder);             // Tải xuống folder game (không cần JWT)
+routers.post('/game/upgame', checkUseJWT(), upload.fields([{ name: 'file_path' }, { name: 'image_file_path' }]), createGame); // Upload game
 
-routers.post('/addhistory/:slug',checkUseJWT, addGameHistoryController);
-routers.get('/gamehistory',checkUseJWT, getGamesByUserHistory);
+// History routes yêu cầu check JWT
+routers.post('/addhistory/:slug', checkUseJWT(), addGameHistoryController);  // Thêm lịch sử game
+routers.get('/gamehistory', checkUseJWT(), getGamesByUserHistory);           // Lấy lịch sử game của user
 
-routers.get('/game/sendgame/:game_id',downloadGameFolder)
+// Comment routes
+routers.get('/games/:slug/comments', getCommentsBySlugController);         // Lấy comment theo slug (không cần JWT)
 
-routers.post('/game/upgame',checkUseJWT, upload.fields([{ name: 'file_path' }, { name: 'image_file_path' }]), createGame);
+// Comment routes yêu cầu check JWT
+routers.post('/games/:slug/comments', checkUseJWT(), addCommentController);  // Thêm comment
 
-routers.post('/games/:slug/comments',checkUseJWT, addCommentController);
-routers.get('/games/:slug/comments', getCommentsBySlugController);
+// Vote routes
+routers.get('/games/:slug/vote', getAverageRatingController);              // Lấy rating trung bình (không cần JWT)
 
-routers.post('/games/:slug/vote',checkUseJWT, addVoteController);
-routers.get('/games/:slug/vote', getAverageRatingController);
-routers.get('/games/:slug/user-rating',checkUseJWT, getUserRatingController);
+// Vote routes yêu cầu check JWT
+routers.post('/games/:slug/vote', checkUseJWT(), addVoteController);         // Thêm vote
+routers.get('/games/:slug/user-rating', checkUseJWT, getUserRatingController); // Lấy rating của user
 
-
+//Role( 0:user, 1:publisher, 2:admin)
 export default routers;

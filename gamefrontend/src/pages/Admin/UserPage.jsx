@@ -25,7 +25,7 @@ const UserPage = () => {
     const handleSaveChanges = (user) => {
         fetch(`http://localhost:3000/api/user/update_user/${user.user_id}`, {
             method: 'PUT',
-            include:'credentials',
+            credentials:'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -49,7 +49,7 @@ const UserPage = () => {
                         <th>User Name</th>
                         <th>Email</th>
                         <th>Password</th>
-                        <th>Role( 0:user, 1:admin)</th>
+                        <th>Role( 0:user, 1:publisher, 2:admin)</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>

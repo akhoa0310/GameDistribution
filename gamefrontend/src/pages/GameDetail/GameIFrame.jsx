@@ -48,7 +48,7 @@ const GameIframe = () => {
   return (
     <Container style={{ paddingTop: '20px' }}>
       <Row className="mb-4 justify-content-center">
-        <Col xs={12} md={8} className="text-center" style={{ position: 'relative' }}>
+        <Col className="text-center" style={{ position: 'relative' }}>
           {/* Hiển thị iframe trước */}
           <iframe
             src={gameData.file_path}

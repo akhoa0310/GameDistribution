@@ -84,7 +84,7 @@ const LoginRegisterModal = () => {
         </Modal.Header>
         <Modal.Body>
           <Tab.Container activeKey={key} onSelect={(k) => setKey(k)}>
-            <Nav variant="tabs" className="justify-content-center mb-3">
+            <Nav variant="tabs" className="d-flex flex-row justify-content-center mb-2">
               <Nav.Item>
                 <Nav.Link eventKey="login">Login</Nav.Link>
               </Nav.Item>

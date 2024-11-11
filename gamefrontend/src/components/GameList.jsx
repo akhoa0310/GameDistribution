@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import GameBox from './GameBox'; // Import component GameBox
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -8,7 +9,6 @@ const GameList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const gamesPerPage = 12; // Số lượng game mỗi trang
-
 
   useEffect(() => {
     const fetchGames = async (page) => {
@@ -32,104 +32,49 @@ const GameList = () => {
   };
 
   return (
-    <div style={styles.container}>
-    <table>
-      <th><h2 style={styles.title}>Exclusive Games</h2></th>
-      <th>{/* Thanh điều hướng trang */}
-        <div style={styles.pagination}>
-        <button
-          style={styles.pageButton}
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          &lt;
-        </button>
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            style={currentPage === index + 1 ? styles.activePageButton : styles.pageButton}
-          >
-            {index + 1 < 10 ? `0${index + 1}` : index + 1}
-          </button>
-        ))}
-        <button
-          style={styles.pageButton}
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          &gt;
-        </button>
-        </div>
-      </th>
-    </table>
-
-      <div style={styles.gameList}>
+    <Container className="py-4">
+      <h2 className="text-primary mb-4 text-center">Exclusive Games</h2>
+      
+      <Row className="gy-4">
         {games.map((game) => (
-          <GameBox
-            key={game.game_id}
-            title={game.game_name}
-            developer={game.User.user_name}
-            imageUrl={
-              game.image_file_path
-                ? `${backendUrl}/public${game.image_file_path}`
-                : 'public/Logo XGame/Logo_XGame-01.png'
-            }
-            gameUrl={`${window.location.origin}/games/${game.slug}`}
-          />
+          <Col key={game.game_id} xs={12} sm={6} md={4} lg={3}>
+            <GameBox
+              title={game.game_name}
+              developer={game.User.user_name}
+              imageUrl={
+                game.image_file_path
+                  ? `${backendUrl}/public${game.image_file_path}`
+                  : 'public/Logo XGame/Logo_XGame-01.png'
+              }
+              gameUrl={`${window.location.origin}/games/${game.slug}`}
+            />
+          </Col>
         ))}
+      </Row>
+
+      <div className="d-flex justify-content-center mt-4">
+        <Pagination>
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(totalPages)].map((_, index) => (
+            <Pagination.Item
+              key={index + 1}
+              active={currentPage === index + 1}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1 < 10 ? `0${index + 1}` : index + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
       </div>
-
-  
-    </div>
+    </Container>
   );
-};
-
-const styles = {
-  container: {
-    padding: '20px',
-  },
-  title: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '20px',
-    color: '#4a00e0',
-  },
-  gameList: {
-    display: 'flex',
-    flexWrap: 'wrap', // Cho phép các game xuống dòng nếu không đủ chỗ
-    justifyContent: 'flex-start',
-    gap: '20px',
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '20px',
-  },
-  pageButton: {
-    padding: '10px',
-    margin: '0 5px',
-    borderRadius: '50%',
-    backgroundColor: '#6200ea',
-    color: 'white',
-    border: 'none',
-    cursor: 'pointer',
-    width: '40px',
-    height: '40px',
-    fontSize: '16px',
-  },
-  activePageButton: {
-    padding: '10px',
-    margin: '0 5px',
-    borderRadius: '50%',
-    backgroundColor: '#3700b3',
-    color: 'white',
-    border: 'none',
-    cursor: 'pointer',
-    width: '40px',
-    height: '40px',
-    fontSize: '16px',
-  },
 };
 
 export default GameList;

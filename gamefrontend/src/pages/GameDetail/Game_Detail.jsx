@@ -1,39 +1,21 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import GameIframe from './GameIFrame';
 import SimilarGames from './SimilarGame';
 
 function GameDetail() {
   return (
-    <div>
-    <div style={styles.container}>
-      <div style={styles.gameIframeColumn}>
-        <GameIframe />
-      </div>
-      <div style={styles.similarGamesColumn}>
-        <SimilarGames />
-      </div>
-    </div>
-    </div>
+    <Container style={{ padding: '20px' }}>
+      <Row className="g-4">
+        <Col md={8} style={{ padding: '10px', border: '1px solid #ddd', display: 'flex', flexDirection: 'column' }}>
+          <GameIframe />
+        </Col>
+        <Col md={4} style={{ padding: '10px', border: '1px solid #ddd', display: 'flex', flexDirection: 'column' }}>
+          <SimilarGames />
+        </Col>
+      </Row>
+    </Container>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '20px',
-    padding: '20px',
-  },
-  gameIframeColumn: {
-    flex: 7, // Chiếm 70% chiều rộng
-    padding: '10px',
-    border: '1px solid #ddd',
-  },
-  similarGamesColumn: {
-    flex: 3, // Chiếm 30% chiều rộng
-    padding: '10px',
-    border: '1px solid #ddd',
-  },
-};
 
 export default GameDetail;
