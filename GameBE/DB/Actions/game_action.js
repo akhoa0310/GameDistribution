@@ -340,7 +340,8 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
         player_number,
         genres,
         slug,
-        date_release: date_release || new Date()
+        date_release: new Date(),
+        player_count: 0
     });
 
     const game_id = newGame.game_id;
@@ -365,6 +366,13 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
     // Xóa file zip sau khi giải nén
     fs.unlinkSync(zipFilePath);
 
+    // Lấy tên thư mục trong destinationPath
+    const folderContents = fs.readdirSync(destinationPath);
+    const originalFolderName = folderContents.find(file => {
+        const fullPath = path.join(destinationPath, file);
+        return fs.statSync(fullPath).isDirectory(); // Kiểm tra nếu là thư mục
+    }) || 'default';
+
     // Sao chép file ảnh thumbnail vào thư mục đích
     const thumbnailPath = path.join(destinationPath, 'thumbnail.png');
     fs.copyFileSync(imageFilePath, thumbnailPath);
@@ -374,7 +382,7 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
 
     // Cập nhật đường dẫn file_path và image_file_path trong cơ sở dữ liệu
     await newGame.update({
-        file_path: `/games/${folderName}/index.html`,
+        file_path: `/games/${folderName}/${originalFolderName}/index.html`,
         image_file_path: `/games/${folderName}/thumbnail.png`,
         slug: folderName
     });
