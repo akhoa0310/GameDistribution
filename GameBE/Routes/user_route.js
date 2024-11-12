@@ -2,7 +2,7 @@
 import express from 'express';
 import { registerUser, loginUser,handleUpdateUserNameOrEmail,getUserInfoById,handleUpdatePassword,handleGetAllUsers,updateUserController} from '../Controller/user_controller.js';
 import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,getGameCountByGenres,getGameCountByPlayerNumber,
-    getGameCountByUser,createGame,getSimilarGames,handleUpdateGame, getGamesByUserId,downloadGameFolder} from '../Controller/game_controller.js';
+    getGameCountByUser,createGame,getSimilarGames,handleUpdateGame,getGamesByUserId,downloadGameFolder,incrementGamePlayerCountController} from '../Controller/game_controller.js';
 import { getGamesByUserHistory, addGameHistoryController} from '../Controller/history_controller.js';
 import { addCommentController,getCommentsBySlugController } from '../Controller/comment_controller.js';
 import { addVoteController,getAverageRatingController,getUserRatingController } from '../Controller/vote_controller.js';
@@ -31,6 +31,8 @@ routers.get('/games/count/player-number', getGameCountByPlayerNumber);  // Đế
 routers.get('/games/count/genres', getGameCountByGenres);               // Đếm game theo genres
 routers.get('/games/count/users', getGameCountByUser);                  // Đếm game theo user_name
 routers.get('/games/similar/:slug', getSimilarGames);                   // Tìm game tương tự
+routers.post('/game/increment/:slug', incrementGamePlayerCountController);
+
 
 // Các route game yêu cầu check JWT
 routers.get('/mygame', checkUseJWT(), getGamesByUserId);                  // Lấy game của user
@@ -53,7 +55,7 @@ routers.get('/games/:slug/vote', getAverageRatingController);              // L�
 
 // Vote routes yêu cầu check JWT
 routers.post('/games/:slug/vote', checkUseJWT(), addVoteController);         // Thêm vote
-routers.get('/games/:slug/user-rating', checkUseJWT, getUserRatingController); // Lấy rating của user
+routers.get('/games/:slug/user-rating', checkUseJWT(), getUserRatingController); // Lấy rating của user
 
 //Role( 0:user, 1:publisher, 2:admin)
 export default routers;

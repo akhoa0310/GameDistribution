@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { useAuth } from '../services/AuthContext.js';
 import Logo_XGame from '../assets/Logo_XGame-011.png';
 import LoginRegisterModal from './LoginModal';
+import GameSearch from './SearchGame.jsx';
 
 const Header = () => {
   const { isLoggedIn, userInfo, logout } = useAuth();
@@ -34,6 +35,9 @@ const Header = () => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link as={Link} to="/support">Support</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <GameSearch/>
               </Nav.Item>
               <Nav.Item>
                 {isLoggedIn ? (

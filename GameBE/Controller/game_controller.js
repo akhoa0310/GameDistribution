@@ -1,7 +1,7 @@
 // controllers/gameController.js
 import {findGameBySlug,findAllGames,findGames,countTotalGames,findGamesbyName,countTotalGamesByName,
     countGamesByGenre, countGamesByPlayerNumber,updateGame,countGamesByUser,searchGamesWithFilters,
-    findSimilarGame,findGamesByUserId,addGame,createGameZipFile, 
+    findSimilarGame,findGamesByUserId,addGame,createGameZipFile,incrementPlayerCount
     } from "../DB/Actions/game_action.js";
 
 // Hàm lấy thông tin game theo ID
@@ -259,5 +259,28 @@ export const downloadGameFolder = async (req, res) => {
         await createGameZipFile(game_id, res);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+export const incrementGamePlayerCountController = async (req, res) => {
+    try {
+        const { slug } = req.params; // Lấy slug từ param
+
+        // Gọi hàm action để tăng player_count
+        const updatedGame = await incrementPlayerCount(slug);
+
+        res.status(200).json({
+            message: 'Player count incremented successfully',
+            data: {
+                game_id: updatedGame.game_id,
+                game_name: updatedGame.game_name,
+                player_count: updatedGame.player_count,
+            },
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error.message,
+        });
     }
 };

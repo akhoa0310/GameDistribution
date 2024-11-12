@@ -419,3 +419,23 @@ export const createGameZipFile = async (game_id, res) => {
     }
 };
 
+export const incrementPlayerCount = async (slug) => {
+    try {
+        // Tìm game dựa trên slug
+        const game = await Game.findOne({ where: { slug } });
+
+        if (!game) {
+            throw new Error('Game not found');
+        }
+
+        // Cộng thêm 1 vào player_count
+        game.player_count += 1;
+        
+        // Lưu thay đổi
+        await game.save();
+
+        return game;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};

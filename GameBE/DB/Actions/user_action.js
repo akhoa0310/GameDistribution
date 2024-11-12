@@ -1,10 +1,7 @@
-// actions/userActions.js
 import { User } from "../Models/user_model.js";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import bcrypt from 'bcryptjs'
-
-
+import bcrypt from 'bcryptjs';
 
 // Khởi tạo dotenv để đọc các biến môi trường từ file .env
 dotenv.config();
@@ -27,54 +24,55 @@ export const register = async (user_name, email, password) => {
   // Mã hóa mật khẩu
   const hashedPassword = await hashPassword(password);
   
-  // Tạo người dùng mới
-  const newUser = await User.create({ user_name, email, password: hashedPassword });
+  // Tạo người dùng mới với status mặc định là 1 (active)
+  const newUser = await User.create({ user_name, email, password: hashedPassword, status: 1 });
   return newUser;
 };
 
 // Đăng nhập người dùng
 export const login = async (email, password) => {
-  // Tìm người dùng theo email
-  const user = await User.findOne({ where: { email } });
-  if (!user||user.status === 0) throw new Error('User not found');
+  // Tìm người dùng theo email và kiểm tra status
+  const user = await User.findOne({ where: { email, status: 1 } });
+  if (!user) throw new Error('User not found or inactive');
 
   // Kiểm tra mật khẩu
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await comparePassword(password, user.password);
   if (!isPasswordValid) throw new Error('Invalid credentials');
 
   // Tạo JWT token với secret_key từ .env
   const token = jwt.sign(
-    { id: user.user_id,user_name: user.user_name, email: user.email, role: user.role },
-    process.env.JWT_SECRET_KEY, // Lấy secret_key từ biến môi trường
-    { expiresIn: process.env.JWT_EXPIRES_IN } // Token hết hạn sau 1 giờ
+    { id: user.user_id, user_name: user.user_name, email: user.email, role: user.role },
+    process.env.JWT_SECRET_KEY,
+    { expiresIn: process.env.JWT_EXPIRES_IN }
   );
-  return {token };
+  return { token };
 };
 
 // Hàm cập nhật tên hoặc email người dùng
 export const updateUserNameOrEmail = async (userId, newUserName, newEmail) => {
-    try {   
-      // Kiểm tra nếu có yêu cầu thay đổi email và email mới đã tồn tại
-      if (newEmail) {
-        const existingUser = await User.findOne({ where: { email: newEmail, user_id: { $ne: userId }},  });
-        if (existingUser) {
-          return { success: false, message: 'Email này đã được sử dụng' };
-        }
+  try {
+    // Kiểm tra nếu có yêu cầu thay đổi email và email mới đã tồn tại
+    if (newEmail) {
+      const existingUser = await User.findOne({ where: { email: newEmail, user_id: { $ne: userId } } });
+      if (existingUser) {
+        return { success: false, message: 'Email này đã được sử dụng' };
       }
-  
-      // Cập nhật tên hoặc email trong cơ sở dữ liệu
-      const updateData = {};
-      if (newUserName) updateData.user_name = newUserName;
-      if (newEmail) updateData.email = newEmail;
-  
-      await User.update(updateData, { where: { user_id: userId } });
-      return { success: true, message: 'Cập nhật thông tin thành công' };
-  
-    } catch (error) {
-      return { success: false, message: 'Lỗi khi cập nhật thông tin' };
     }
+
+    // Cập nhật tên hoặc email trong cơ sở dữ liệu
+    const updateData = {};
+    if (newUserName) updateData.user_name = newUserName;
+    if (newEmail) updateData.email = newEmail;
+
+    await User.update(updateData, { where: { user_id: userId } });
+    return { success: true, message: 'Cập nhật thông tin thành công' };
+  
+  } catch (error) {
+    return { success: false, message: 'Lỗi khi cập nhật thông tin' };
+  }
 };
 
+// Cập nhật mật khẩu người dùng
 export const updatePassword = async (user_id, oldPassword, newPassword) => {
   try {
     // Tìm người dùng theo ID
@@ -90,7 +88,7 @@ export const updatePassword = async (user_id, oldPassword, newPassword) => {
     }
 
     // Băm mật khẩu mới và cập nhật
-    const hashedPassword = await hashPassword(newPassword); // Sử dụng await ở đây
+    const hashedPassword = await hashPassword(newPassword);
     await User.update({ password: hashedPassword }, { where: { user_id: user_id } });
 
     return { success: true, message: 'Đổi mật khẩu thành công' };
@@ -99,11 +97,10 @@ export const updatePassword = async (user_id, oldPassword, newPassword) => {
   }
 };
 
-
-  // Hàm lấy thông tin người dùng dựa trên ID
+// Hàm lấy thông tin người dùng dựa trên ID
 export const findUserInfoById = async (userId) => {
   try {
-    const user = await User.findOne({ where: { user_id: userId } }); // Sử dụng user_id để tìm người dùng
+    const user = await User.findOne({ where: { user_id: userId, status: 1 } }); // Chỉ lấy người dùng có status là 1
     if (!user) {
       return { success: false, message: 'User not found' };
     }
@@ -120,6 +117,7 @@ export const getAllUsers = async () => {
   try {
     const users = await User.findAll({
       attributes: ['user_id', 'user_name', 'email', 'role', 'status'], // Chỉ lấy các trường cần thiết
+      where: { status: 1 } // Chỉ lấy người dùng có status là 1
     });
     return { success: true, data: users };
   } catch (error) {
@@ -130,39 +128,39 @@ export const getAllUsers = async () => {
 // Hàm cập nhật thông tin user theo ID
 export const updateUser = async (id, userData) => {
   try {
-      const { user_name, email, role, status, password } = userData;
+    const { user_name, email, role, status, password } = userData;
 
-      // Tìm user theo ID
-      const user = await User.findByPk(id);
-      if (!user) {
-          throw new Error('User not found'); // Nếu không tìm thấy user
+    // Tìm user theo ID
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Kiểm tra nếu có cập nhật email
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        throw new Error('Email is already in use');
       }
+    }
 
-      // Kiểm tra nếu có cập nhật email
-      if (email && email !== user.email) {
-          const existingUser = await User.findOne({ where: { email } });
-          if (existingUser) {
-              throw new Error('Email is already in use'); // Nếu email đã tồn tại
-          }
-      }
+    // Mã hóa mật khẩu nếu có cập nhật password
+    let hashedPassword;
+    if (password) {
+      hashedPassword = await hashPassword(password);
+    }
 
-      // Mã hóa mật khẩu nếu có cập nhật password
-      let hashedPassword;
-      if (password) {
-          hashedPassword = await hashPassword(password) // Mã hóa mật khẩu
-      }
+    // Cập nhật thông tin user
+    await user.update({
+      user_name,
+      email,
+      role,
+      status,
+      password: hashedPassword || user.password // Giữ mật khẩu cũ nếu không cập nhật
+    });
 
-      // Cập nhật thông tin user
-      await user.update({
-          user_name,
-          email,
-          role,
-          status,
-          password: hashedPassword || user.password // Giữ mật khẩu cũ nếu không cập nhật
-      });
-
-      return user; // Trả về user đã được cập nhật
+    return user; // Trả về user đã được cập nhật
   } catch (error) {
-      throw new Error(error.message); // Bắt lỗi và truyền lại thông báo lỗi
+    throw new Error(error.message);
   }
 };

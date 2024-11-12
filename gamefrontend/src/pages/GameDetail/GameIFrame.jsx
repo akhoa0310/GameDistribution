@@ -35,6 +35,14 @@ const GameIframe = () => {
       body: JSON.stringify({ played_time: new Date() }),
     })
       .then(() => {
+        // Gọi API đếm số lượng chơi
+        return fetch(`http://localhost:3000/api/game/increment/${slug}`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        });
+      })
+      .then(() => {
         setIsPlaying(true); // Chuyển sang trạng thái đang chơi
       })
       .catch(error => {
