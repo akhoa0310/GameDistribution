@@ -3,7 +3,6 @@ import SearchBar from './SearchBar'; // Import SearchBar component
 import GameBox from '../../components/GameBox'; // Import GameBox component
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const SearchGameList = () => {
   const [games, setGames] = useState([]);
@@ -32,9 +31,9 @@ const SearchGameList = () => {
   useEffect(() => {
     const fetchFilterData = async () => {
       try {
-        const genreRes = await fetch('http://localhost:3000/api/games/count/genres');
-        const developerRes = await fetch('http://localhost:3000/api/games/count/users');
-        const playerNumberRes = await fetch('http://localhost:3000/api/games/count/player-number');
+        const genreRes = await fetch('${process.env.REACT_APP_BACKEND_URL}/api/games/count/genres');
+        const developerRes = await fetch('${process.env.REACT_APP_BACKEND_URL}/api/games/count/users');
+        const playerNumberRes = await fetch('${process.env.REACT_APP_BACKEND_URL}/api/games/count/player-number');
 
         const genresData = await genreRes.json();
         const developersData = await developerRes.json();
@@ -64,7 +63,7 @@ const SearchGameList = () => {
     const fetchGames = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/games/searchs?query=${debouncedQuery}&genres=${genres}&user_id=${developers}&player_number=${playerNumber}&limit=${gamesPerPage}&page=${currentPage}`
+          `${process.env.REACT_APP_BACKEND_URL}/api/games/searchs?query=${debouncedQuery}&genres=${genres}&user_id=${developers}&player_number=${playerNumber}&limit=${gamesPerPage}&page=${currentPage}`
         );
         if (!response.ok) {
           console.error(`HTTP error! Status: ${response.status}`);
@@ -144,7 +143,7 @@ const SearchGameList = () => {
                   developer={game.User.user_name}
                   imageUrl={
                     game.image_file_path
-                      ? `${backendUrl}/public${game.image_file_path}`
+                      ? `${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`
                       : 'public/Logo XGame/Logo_XGame-01.png'
                   }
                   gameUrl={`${window.location.origin}/games/${game.slug}`}

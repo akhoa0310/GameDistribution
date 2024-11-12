@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import GameBox from './GameBox'; // Import component GameBox
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const GameList = () => {
   const [games, setGames] = useState([]);
@@ -13,7 +12,7 @@ const GameList = () => {
   useEffect(() => {
     const fetchGames = async (page) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/games?limit=${gamesPerPage}&page=${page}`);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games?limit=${gamesPerPage}&page=${page}`);
         const data = await response.json();
 
         // Gán dữ liệu lấy từ API
@@ -43,7 +42,7 @@ const GameList = () => {
               developer={game.User.user_name}
               imageUrl={
                 game.image_file_path
-                  ? `${backendUrl}/public${game.image_file_path}`
+                  ? `${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`
                   : 'public/Logo XGame/Logo_XGame-01.png'
               }
               gameUrl={`${window.location.origin}/games/${game.slug}`}

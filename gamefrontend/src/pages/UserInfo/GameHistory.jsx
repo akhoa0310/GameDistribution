@@ -11,7 +11,7 @@ const GameHistory = () => {
   useEffect(() => {
     const fetchGames = async (page) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/gamehistory?limit=${gamesPerPage}&page=${page}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/gamehistory?limit=${gamesPerPage}&page=${page}`, {
           method: 'GET',
           credentials: 'include',
         });

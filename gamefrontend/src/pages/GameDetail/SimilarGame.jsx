@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import GameBox from '../../components/GameBox';
 import { Container, Row, Spinner } from 'react-bootstrap';
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
 const SimilarGames = () => {
   const { slug } = useParams();
@@ -13,7 +13,7 @@ const SimilarGames = () => {
   useEffect(() => {
     const fetchSimilarGames = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/games/similar/${slug}`);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/similar/${slug}`);
         const data = await response.json();
         setSimilarGames(data.games.slice(0, 4));
         setLoading(false);
@@ -47,7 +47,7 @@ const SimilarGames = () => {
               developer={game.User.user_name}
               imageUrl={
                 game.image_file_path
-                  ? `${backendUrl}/public${game.image_file_path}`
+                  ? `${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`
                   : 'public/Logo XGame/Logo_XGame-01.png'
               }
               gameUrl={`${window.location.origin}/games/${game.slug}`}

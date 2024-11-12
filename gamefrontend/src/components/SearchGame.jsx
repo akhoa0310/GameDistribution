@@ -25,7 +25,7 @@ function GameSearch() {
     debounceTimeout.current = setTimeout(async () => {
       if (searchText.length > 0) {
         try {
-          const response = await fetch(`http://localhost:3000/api/games/search?query=${searchText}`);
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/search?query=${searchText}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -64,7 +64,7 @@ function GameSearch() {
 
   return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }} ref={searchRef}>
-      <InputGroup style={{ width: showSearch ? '300px' : '40px', transition: 'width 0.3s' }}>
+      <InputGroup style={{ width: showSearch ? '250px' : '40px', transition: 'width 0.3s' }}>
         {showSearch && (
           <FormControl
             type="text"
@@ -87,7 +87,7 @@ function GameSearch() {
               onClick={() => handleGameClick(game.slug)} // Chuyển hướng khi nhấp vào game
               style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <Image src={game.image_file_path} rounded style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+              <Image src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`} rounded style={{ width: '40px', height: '40px', marginRight: '10px' }} />
               <div>
                 <strong>{game.User.user_name}</strong>
                 <div>{game.game_name}</div>

@@ -25,7 +25,7 @@ const LoginRegisterModal = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/users/login', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email, password: formData.password }),
@@ -51,7 +51,7 @@ const LoginRegisterModal = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:3000/api/users/register', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

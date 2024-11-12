@@ -10,7 +10,7 @@ const CommentSection = ({ slug }) => {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/games/${slug}/comments`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/${slug}/comments`);
                 const data = await response.json();
                 if (data.message === 'Comments retrieved successfully') {
                     setComments(data.data); // Cập nhật danh sách bình luận
@@ -30,7 +30,7 @@ const CommentSection = ({ slug }) => {
 
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:3000/api/games/${slug}/comments`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/${slug}/comments`, {
                 method: 'POST',
                 credentials:"include", // Đảm bảo gửi cookie nếu cần
                 headers: { 'Content-Type': 'application/json' },

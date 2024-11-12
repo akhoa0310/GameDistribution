@@ -7,7 +7,7 @@ const UserPage = () => {
 
     // Lấy danh sách người dùng từ API
     useEffect(() => {
-        fetch('http://localhost:3000/api/users/all')
+        fetch('${process.env.REACT_APP_BACKEND_URL}/api/users/all')
             .then((res) => res.json())
             .then((data) => setUsers(data))
             .catch((error) => console.error('Error:', error));
@@ -23,7 +23,7 @@ const UserPage = () => {
 
     // Gửi dữ liệu chỉnh sửa đến server
     const handleSaveChanges = (user) => {
-        fetch(`http://localhost:3000/api/user/update_user/${user.user_id}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/update_user/${user.user_id}`, {
             method: 'PUT',
             credentials:'include',
             headers: {

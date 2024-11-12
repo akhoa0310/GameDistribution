@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="light" expand="sm" className="py-3">
+      <Navbar bg="light" expand="md" className="py-3">
         <Container fluid className="ms-md-3 ms-sm-1">
           <Navbar.Brand as={Link} to="/" className="ms-md-3 ms-sm-1">
             <img

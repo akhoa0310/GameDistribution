@@ -18,7 +18,7 @@ const GamePage = () => {
 
     // Fetch games dựa trên searchQuery
     useEffect(() => {
-        fetch(`http://localhost:3000/api/games/search?query=${searchQuery}`)
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/search?query=${searchQuery}`)
             .then((res) => res.json())
             .then((data) => {
                 setGames(data.games);
@@ -29,7 +29,7 @@ const GamePage = () => {
 
     // Fetch developer options
     useEffect(() => {
-        fetch('http://localhost:3000/api/games/count/users')
+        fetch('${process.env.REACT_APP_BACKEND_URL}/api/games/count/users')
             .then((res) => res.json())
             .then((data) => setDeveloperOptions(data))
             .catch((error) => console.error('Error:', error));
@@ -37,7 +37,7 @@ const GamePage = () => {
 
     // Gửi dữ liệu chỉnh sửa đến server
     const handleSaveChanges = () => {
-        fetch(`http://localhost:3000/api/game/update_info/${selectedGame.game_id}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/game/update_info/${selectedGame.game_id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {

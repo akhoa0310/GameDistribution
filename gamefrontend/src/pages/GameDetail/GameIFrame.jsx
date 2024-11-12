@@ -11,7 +11,7 @@ const GameIframe = () => {
 
   useEffect(() => {
     // Gọi API lấy thông tin game bằng slug
-    fetch(`http://localhost:3000/api/game/${slug}`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/game/${slug}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -28,7 +28,7 @@ const GameIframe = () => {
 
   const handlePlayNow = () => {
     // Gọi API thêm lịch sử chơi game
-    fetch(`http://localhost:3000/api/addhistory/${slug}`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/addhistory/${slug}`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -36,7 +36,7 @@ const GameIframe = () => {
     })
       .then(() => {
         // Gọi API đếm số lượng chơi
-        return fetch(`http://localhost:3000/api/game/increment/${slug}`, {
+        return fetch(`${process.env.REACT_APP_BACKEND_URL}/api/game/increment/${slug}`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -72,7 +72,7 @@ const GameIframe = () => {
           {!isPlaying && (
             <>
               <Image
-                src={gameData.image_file_path}
+                src={`${process.env.REACT_APP_BACKEND_URL}/public${gameData.image_file_path}`}
                 alt={gameData.game_name}
                 fluid
                 style={{

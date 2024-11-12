@@ -10,7 +10,7 @@ function AverageRatingDisplay({ slug }) {
   useEffect(() => {
     const fetchAverageRating = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/games/${slug}/vote`);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/${slug}/vote`);
         if (response.ok) {
           const data = await response.json();
           setAverageRating(parseFloat(data.data.averageRating) || 0);
@@ -43,7 +43,7 @@ function UserRating({ slug }) {
   useEffect(() => {
     const fetchUserVote = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/games/${slug}/user-rating`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/${slug}/user-rating`, {
           credentials: 'include',
         });
         if (response.ok) {
@@ -64,7 +64,7 @@ function UserRating({ slug }) {
     setUserVote(rate);
 
     try {
-      const response = await fetch(`http://localhost:3000/api/games/${slug}/vote`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/${slug}/vote`, {
         method: 'POST',
         credentials: 'include',
         headers: {

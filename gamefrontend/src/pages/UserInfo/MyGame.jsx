@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import GameBox from '../../components/GameBox'; // Import component GameBox
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const MyGame = () => {
   const [games, setGames] = useState([]);
@@ -13,7 +12,7 @@ const MyGame = () => {
   useEffect(() => {
     const fetchGames = async (page) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/mygame?limit=${gamesPerPage}&page=${page}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/mygame?limit=${gamesPerPage}&page=${page}`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -46,8 +45,8 @@ const MyGame = () => {
               developer={game.User.user_name}
               imageUrl={
                 game.image_file_path
-                  ? `${backendUrl}/public${game.image_file_path}`
-                  : `${backendUrl}/public/Logo XGame/Logo_XGame-01.png`
+                  ? `${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`
+                  : `${process.env.REACT_APP_BACKEND_URL}/public/Logo XGame/Logo_XGame-01.png`
               }
               gameUrl={`${window.location.origin}/games/${game.slug}`}
             />

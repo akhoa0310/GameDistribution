@@ -11,7 +11,7 @@ function UserProfile() {
 
     useEffect(() => {
         // Lấy thông tin người dùng từ JWT (giả sử có API /api/users/profile)
-        fetch('http://localhost:3000/api/user/get', {
+        fetch('${process.env.REACT_APP_BACKEND_URL}/api/user/get', {
             method: 'GET',
             credentials: 'include'
           })
@@ -30,7 +30,7 @@ function UserProfile() {
     };
 
     const saveUserInfo = () => {
-        fetch('http://localhost:3000/api/user/update_profile', {
+        fetch('${process.env.REACT_APP_BACKEND_URL}/api/user/update_profile', {
             method: 'PUT',
             credentials: 'include',
             headers: {
@@ -58,7 +58,7 @@ function UserProfile() {
             return;
         }
         
-        fetch('http://localhost:3000/api/user/change_password', {
+        fetch('${process.env.REACT_APP_BACKEND_URL}/api/user/change_password', {
             method: 'PUT',
             credentials: 'include',
             headers: {
