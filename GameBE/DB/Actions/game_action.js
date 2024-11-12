@@ -382,15 +382,15 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
     return newGame;
 };
 
-export const createGameZipFile = async (game_id, res) => {
+export const createGameZipFile = async (slug, res) => {
     try {
         // Tìm game trong database để lấy slug và file_path
-        const game = await Game.findByPk(game_id);
+        const game = await Game.findOne({ where: { slug } });
         if (!game) {
             throw new Error('Game not found');
         }
 
-        const { slug, file_path } = game;
+        const { file_path } = game;
         const gameFolderPath = path.join('public', path.dirname(file_path));
 
         if (!fs.existsSync(gameFolderPath)) {

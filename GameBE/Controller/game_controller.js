@@ -252,11 +252,11 @@ export const createGame = async (req, res) => {
 };
 
 export const downloadGameFolder = async (req, res) => {
-    const { game_id } = req.params;
+    const { slug } = req.params;
 
     try {
         // Gọi hàm action để thực hiện logic và gửi về response
-        await createGameZipFile(game_id, res);
+        await createGameZipFile(slug, res);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

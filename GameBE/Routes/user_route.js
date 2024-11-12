@@ -37,7 +37,7 @@ routers.post('/game/increment/:slug', incrementGamePlayerCountController);
 // Các route game yêu cầu check JWT
 routers.get('/mygame', checkUseJWT(), getGamesByUserId);                  // Lấy game của user
 routers.put('/game/update_info/:id', checkUseJWT([2]), handleUpdateGame);    // Cập nhật thông tin game
-routers.get('/game/sendgame/:game_id',checkUseJWT(), downloadGameFolder);             // Tải xuống folder game (không cần JWT)
+routers.get('/game/sendgame/:slug', downloadGameFolder);             // Tải xuống folder game (không cần JWT)
 routers.post('/game/upgame', checkUseJWT(), upload.fields([{ name: 'file_path' }, { name: 'image_file_path' }]), createGame); // Upload game
 
 // History routes yêu cầu check JWT
