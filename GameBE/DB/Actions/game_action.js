@@ -43,6 +43,7 @@ export const findGames = async (limit, offset) => {
         const games = await Game.findAll({
             limit: limit,
             offset: offset,
+            order: [['date_release', 'DESC']], // Sắp xếp theo ngày phát hành mới nhất
             include: [{
                 model: User, // Tham chiếu tới model User
                 attributes: ['user_name'] // Chỉ lấy trường user_name

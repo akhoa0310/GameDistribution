@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Table, Button, Form, Alert } from 'react-bootstrap';
 
 const UserPage = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
+    const [error, setError] = useState(null); // State để lưu trữ thông báo lỗi
 
     // Lấy danh sách người dùng từ API
     useEffect(() => {
-        fetch('${process.env.REACT_APP_BACKEND_URL}/api/users/all')
-            .then((res) => res.json())
-            .then((data) => setUsers(data))
-            .catch((error) => console.error('Error:', error));
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/all`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Failed to fetch users'); // Bắt lỗi khi response không thành công
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setUsers(data);
+                setError(null); // Xóa thông báo lỗi nếu dữ liệu được lấy thành công
+            })
+            .catch((error) => {
+                setError('Error fetching users'); // Thiết lập thông báo lỗi
+                console.error('Error:', error);
+            });
     }, []);
 
     // Cập nhật trường trong danh sách users
@@ -25,23 +37,35 @@ const UserPage = () => {
     const handleSaveChanges = (user) => {
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/update_user/${user.user_id}`, {
             method: 'PUT',
-            credentials:'include',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to update user'); // Bắt lỗi khi response không thành công
+                }
+                return response.json();
+            })
             .then((data) => {
                 setEditingUser(null);
                 setUsers(users.map((u) => (u.user_id === data.user_id ? data : u)));
             })
-            .catch((error) => console.error('Error:', error));
+            .catch((error) => {
+                setError('Error updating user'); // Thiết lập thông báo lỗi
+                console.error('Error:', error);
+            });
     };
 
     return (
         <div>
             <h2>User Management</h2>
+
+            {/* Hiển thị thông báo lỗi nếu có */}
+            {error && <Alert variant="danger">{error}</Alert>}
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -49,7 +73,7 @@ const UserPage = () => {
                         <th>User Name</th>
                         <th>Email</th>
                         <th>Password</th>
-                        <th>Role( 0:user, 1:publisher, 2:admin)</th>
+                        <th>Role (0: user, 1: publisher, 2: admin)</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>

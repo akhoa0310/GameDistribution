@@ -50,7 +50,7 @@ const AddGameButton = ({ refreshGames }) => {
     formData.append('player_number', playerNumber);
 
     try {
-      const response = await fetch('${process.env.REACT_APP_BACKEND_URL}/api/game/upgame', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/game/upgame`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -151,7 +151,7 @@ const AddGameButton = ({ refreshGames }) => {
             <Form.Group controlId="playerNumber">
               <Form.Label>Player Number</Form.Label>
               <Form.Control
-                type="number"
+                type="textarea"
                 placeholder="Enter number of players"
                 value={playerNumber}
                 onChange={(e) => setPlayerNumber(e.target.value)}

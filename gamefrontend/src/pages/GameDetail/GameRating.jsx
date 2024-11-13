@@ -3,7 +3,7 @@ import { Rating } from 'react-simple-star-rating';
 import { Row, Col, Button } from 'react-bootstrap';
 
 // Component hiển thị đánh giá trung bình
-function AverageRatingDisplay({ slug }) {
+function AverageRatingDisplay({ slug, refreshTrigger }) {
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
 
@@ -24,7 +24,7 @@ function AverageRatingDisplay({ slug }) {
     };
 
     fetchAverageRating();
-  }, [slug]);
+  }, [slug, refreshTrigger]); // Thêm refreshTrigger vào dependency để cập nhật khi người dùng đánh giá
 
   return (
     <div className="average-rating-display text-center">
@@ -36,7 +36,7 @@ function AverageRatingDisplay({ slug }) {
 }
 
 // Component đánh giá của người dùng
-function UserRating({ slug }) {
+function UserRating({ slug, onRatingSubmit }) {
   const [userVote, setUserVote] = useState(0);
   const [disableRating, setDisableRating] = useState(false);
 
@@ -73,7 +73,9 @@ function UserRating({ slug }) {
         body: JSON.stringify({ rating: rate }),
       });
 
-      if (!response.ok) {
+      if (response.ok) {
+        onRatingSubmit(); // Gọi hàm callback để refresh đánh giá trung bình
+      } else {
         console.error('Failed to update user rating');
       }
     } catch (error) {
@@ -108,14 +110,20 @@ function UserRating({ slug }) {
 
 // Component tổng hợp
 export function GameRating({ slug }) {
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const refreshAverageRating = () => {
+    setRefreshTrigger((prev) => prev + 1); // Thay đổi giá trị trigger để cập nhật AverageRatingDisplay
+  };
+
   return (
     <div className="game-rating">
       <Row>
         <Col md={6}>
-          <AverageRatingDisplay slug={slug} />
+          <AverageRatingDisplay slug={slug} refreshTrigger={refreshTrigger} />
         </Col>
         <Col md={6}>
-          <UserRating slug={slug} />
+          <UserRating slug={slug} onRatingSubmit={refreshAverageRating} />
         </Col>
       </Row>
     </div>

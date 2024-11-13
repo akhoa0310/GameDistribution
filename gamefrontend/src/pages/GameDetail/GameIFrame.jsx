@@ -59,7 +59,7 @@ const GameIframe = () => {
         <Col className="text-center" style={{ position: 'relative' }}>
           {/* Hiển thị iframe trước */}
           <iframe
-            src={gameData.file_path}
+            src={`${process.env.REACT_APP_BACKEND_URL}/public${gameData.file_path}`}
             title={gameData.game_name}
             style={{
               width: '100%', // Đảm bảo iframe chiếm 100% chiều rộng của Row

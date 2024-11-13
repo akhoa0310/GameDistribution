@@ -1,60 +1,58 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import Logo_XGame from '../assets/Logo_XGame-011.png';
+import Logo_XGame from '../assets/Logo_XGame-02.png';
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer style={footerStyle}>
+    <footer style={{ backgroundColor: '#f58023', color: '#fff', padding: '10px 0' }}> {/* Giảm padding từ 20px xuống 10px */}
       <Container>
-        <Row className="justify-content-center align-items-center text-center py-3">
-          <Col xs={12} md={3}>
-            <img src={Logo_XGame} alt="Game Distribution" style={footerLogoStyle} />
+        <Row>
+          <Col md={4} className="text-center mb-2"> {/* Giảm margin bottom */}
+            <img src={Logo_XGame} alt="XGame Studio" style={{ width: '125px' }} /> {/* Giảm kích thước logo */}
+            <div className="d-flex justify-content-center mt-2">
+              <a href="#" className="text-white mx-1" style={{ fontSize: '14px' }}> {/* Giảm kích thước icon */}
+                <FaFacebookF />
+              </a>
+              <a href="#" className="text-white mx-1" style={{ fontSize: '14px' }}>
+                <FaInstagram />
+              </a>
+              <a href="#" className="text-white mx-1" style={{ fontSize: '14px' }}>
+                <FaTwitter />
+              </a>
+              <a href="#" className="text-white mx-1" style={{ fontSize: '14px' }}>
+                <FaLinkedinIn />
+              </a>
+            </div>
           </Col>
-          <Col xs={12} md={3} className="mt-3 mt-md-0">
-            <p>
-              <i className="fas fa-map-marker-alt"></i> Boeing Avenue 30, 1119 PE Schiphol-Rijk, The Netherlands
+          <Col md={4} className="text-center mb-2">
+            <h6>Contact</h6> {/* Giảm kích thước chữ tiêu đề */}
+            <p style={{ fontSize: '14px', margin: '5px 0' }}> {/* Giảm kích thước chữ và margin */}
+              📍 <a href="https://goo.gl/maps/XXXXX" target="_blank" rel="noopener noreferrer" className="text-white">
+                The Nine, No. 9 Pham Van Dong, Mai Dich, Cau Giay, Hanoi
+              </a>
+            </p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}>
+              📞 <a href="tel:+84948814919" className="text-white">094 881 4919</a>
+            </p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}>
+              📧 <a href="mailto:tuyendung@xgamevn.com" className="text-white">tuyendung@xgamevn.com</a>
+            </p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}>
+              🌐 <a href="http://www.xgamestudio.com" target="_blank" rel="noopener noreferrer" className="text-white">www.xgamestudio.com</a>
             </p>
           </Col>
-          <Col xs={12} md={3} className="mt-3 mt-md-0">
-            <a href="https://azerion.com/privacy-policy" style={footerLinksStyle}>Privacy policy</a> |{' '}
-            <a href="https://azerion.com/platform-privacy-policy" style={footerLinksStyle}>Platform Privacy policy</a> |{' '}
-            <a href="https://azerion.com/terms-conditions" style={footerLinksStyle}>Terms & conditions</a>
-          </Col>
-          <Col xs={12} md={3} className="mt-3 mt-md-0">
-            <p>Follow us</p>
-            <a href="https://www.linkedin.com/company/azerion" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-linkedin" style={footerIconStyle}></i>
-            </a>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="text-center mt-3">
-            <p>© Azerion 2024</p>
+          <Col md={4} className="text-center mb-2">
+            <h6>XGame Studio</h6> {/* Giảm kích thước chữ tiêu đề */}
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">About Us</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">Careers</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">News</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">Values</a></p>
           </Col>
         </Row>
       </Container>
     </footer>
   );
-};
-
-const footerStyle = {
-  backgroundColor: '#f9f9f9',
-  padding: '20px 0',
-};
-
-const footerLogoStyle = {
-  height: '50px',
-};
-
-const footerLinksStyle = {
-  color: '#007bff',
-  margin: '0 5px',
-  textDecoration: 'none',
-};
-
-const footerIconStyle = {
-  fontSize: '24px',
-  color: '#007bff',
 };
 
 export default Footer;
