@@ -28,7 +28,7 @@ const Footer = () => {
           <Col md={4} className="text-center mb-2">
             <h6>Contact</h6> {/* Giảm kích thước chữ tiêu đề */}
             <p style={{ fontSize: '14px', margin: '5px 0' }}> {/* Giảm kích thước chữ và margin */}
-              📍 <a href="https://goo.gl/maps/XXXXX" target="_blank" rel="noopener noreferrer" className="text-white">
+              📍 <a href="https://maps.app.goo.gl/Bnhbzbm3LyYJkSXX7" target="_blank" rel="noopener noreferrer" className="text-white">
                 The Nine, No. 9 Pham Van Dong, Mai Dich, Cau Giay, Hanoi
               </a>
             </p>

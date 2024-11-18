@@ -67,8 +67,6 @@ const GameHistory = () => {
 
   return (
     <Container className="py-4">
-      <h2 className="text-primary mb-4">Lịch sử chơi game</h2>
-
       <Row className="gy-3">
         {games.map((game) => (
           <Col key={game.game_id} xs={12} md={4}>
@@ -76,7 +74,7 @@ const GameHistory = () => {
               played_time={game.played_time}
               title={game.Game.game_name}
               developer={game.Game.User.user_name}
-              imageUrl={game.Game.image_file_path}
+              imageUrl={`${process.env.REACT_APP_BACKEND_URL}/public${game.Game.image_file_path}`}
               gameUrl={`${window.location.origin}/games/${game.slug}`}
             />
           </Col>

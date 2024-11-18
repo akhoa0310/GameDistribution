@@ -1,8 +1,8 @@
 // controllers/gameController.js
 import {findGameBySlug,findAllGames,findGames,countTotalGames,findGamesbyName,countTotalGamesByName,
     countGamesByGenre, countGamesByPlayerNumber,updateGame,countGamesByUser,searchGamesWithFilters,
-    findSimilarGame,findGamesByUserId,addGame,createGameZipFile,incrementPlayerCount
-    } from "../DB/Actions/game_action.js";
+    findSimilarGame,findGamesByUserId,addGame,createGameZipFile,incrementPlayerCount,getTopPlayedGames,
+    getNewestGames, getGamesByGenre} from "../DB/Actions/game_action.js";
 
 // Hàm lấy thông tin game theo ID
 export const getGameBySlug = async (req, res) => {
@@ -281,6 +281,55 @@ export const incrementGamePlayerCountController = async (req, res) => {
         res.status(500).json({
             message: 'Internal server error',
             error: error.message,
+        });
+    }
+};
+
+export const getTopPlayedGamesController = async (req, res) => {
+    try {
+        const topGames = await getTopPlayedGames();
+
+        res.status(200).json({
+            message: 'Top 10 most played games fetched successfully',
+            data: topGames
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
+export const getNewestGamesController = async (req, res) => {
+    try {
+        const newestGames = await getNewestGames();
+
+        res.status(200).json({
+            message: 'Top 10 newest games fetched successfully',
+            data: newestGames
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+};
+
+export const getGamesByGenreController = async (req, res) => {
+    try {
+        const { genre } = req.params; // Lấy thể loại từ URL param
+        const games = await getGamesByGenre(genre);
+
+        res.status(200).json({
+            message: `Top 10 games in genre ${genre} fetched successfully`,
+            data: games
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error.message
         });
     }
 };

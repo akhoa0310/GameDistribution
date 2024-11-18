@@ -67,7 +67,6 @@ const MyGame = () => {
 
   return (
     <Container className="py-4">
-      <h2 className="text-primary mb-4">My Game History</h2>
 
       <Row className="gy-3">
         {games.map((game) => (
@@ -76,11 +75,7 @@ const MyGame = () => {
               played_time={game.played_time}
               title={game.game_name}
               developer={game.User.user_name}
-              imageUrl={
-                game.image_file_path
-                  ? `${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`
-                  : `${process.env.REACT_APP_BACKEND_URL}/public/Logo XGame/Logo_XGame-01.png`
-              }
+              imageUrl={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`}
               gameUrl={`${window.location.origin}/games/${game.slug}`}
             />
           </Col>

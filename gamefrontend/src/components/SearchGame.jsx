@@ -87,7 +87,13 @@ function GameSearch() {
               onClick={() => handleGameClick(game.slug)} // Chuyển hướng khi nhấp vào game
               style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <Image src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`} rounded style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+              <Image 
+                src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`} 
+                rounded style={{ width: '40px', height: '40px', marginRight: '10px' }}
+                onError={(e) => {
+                  e.target.onerror = null; // Ngăn lặp vô hạn nếu ảnh fallback cũng bị lỗi
+                  e.target.src = '/Logo XGame/x1.png'; // Ảnh mặc định
+                  }} />
               <div>
                 <strong>{game.User.user_name}</strong>
                 <div>{game.game_name}</div>

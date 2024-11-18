@@ -16,7 +16,13 @@ const GameBox = ({ title, developer, imageUrl, gameUrl, played_time }) => {
       style={styles.gameCard}
       onClick={handleClick}
     >
-      <Card.Img variant="top" src={imageUrl} style={styles.gameImage} />
+      <Card.Img 
+        variant="top" src={imageUrl} 
+        style={styles.gameImage} 
+        onError={(e) => {
+          e.target.onerror = null; // Ngăn lặp vô hạn nếu ảnh fallback cũng bị lỗi
+          e.target.src = '/Logo XGame/x1.png'; // Ảnh mặc định
+          }} />
       <Card.Body>
         <Card.Title style={styles.gameTitle}>{title}</Card.Title>
         <Card.Text style={styles.gameDeveloper}>{developer}</Card.Text>

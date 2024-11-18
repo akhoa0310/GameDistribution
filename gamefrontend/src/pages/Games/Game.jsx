@@ -1,14 +1,14 @@
 import React from 'react';
-import SearchBar from './SearchBar';
 import SearchGameList from './SearchGameList';
-import Footer from '../../components/Footer';
+import GameBanner from './GameBanner';
 
 
 function Game() {
   return (
     <div>
-      <h1>GameHome</h1>
-      
+      <div className="container mt-4">
+        <GameBanner/>
+      </div>
       <SearchGameList/>
 
     </div>

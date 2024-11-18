@@ -45,11 +45,7 @@ const SimilarGames = () => {
             <GameBox
               title={game.game_name}
               developer={game.User.user_name}
-              imageUrl={
-                game.image_file_path
-                  ? `${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`
-                  : 'public/Logo XGame/Logo_XGame-01.png'
-              }
+              imageUrl={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`}
               gameUrl={`${window.location.origin}/games/${game.slug}`}
             />
           </div>

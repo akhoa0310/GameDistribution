@@ -1,8 +1,10 @@
 // routes/userRoutes.js
 import express from 'express';
 import { registerUser, loginUser,handleUpdateUserNameOrEmail,getUserInfoById,handleUpdatePassword,handleGetAllUsers,updateUserController} from '../Controller/user_controller.js';
-import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,getGameCountByGenres,getGameCountByPlayerNumber,
-    getGameCountByUser,createGame,getSimilarGames,handleUpdateGame,getGamesByUserId,downloadGameFolder,incrementGamePlayerCountController} from '../Controller/game_controller.js';
+import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,getGameCountByGenres,
+    getGameCountByPlayerNumber,getGameCountByUser,createGame,getSimilarGames,handleUpdateGame,
+    getGamesByUserId,downloadGameFolder,incrementGamePlayerCountController,getTopPlayedGamesController,
+    getNewestGamesController,getGamesByGenreController} from '../Controller/game_controller.js';
 import { getGamesByUserHistory, addGameHistoryController} from '../Controller/history_controller.js';
 import { addCommentController,getCommentsBySlugController } from '../Controller/comment_controller.js';
 import { addVoteController,getAverageRatingController,getUserRatingController } from '../Controller/vote_controller.js';
@@ -31,6 +33,9 @@ routers.get('/games/count/player-number', getGameCountByPlayerNumber);  // Đế
 routers.get('/games/count/genres', getGameCountByGenres);               // Đếm game theo genres
 routers.get('/games/count/users', getGameCountByUser);                  // Đếm game theo user_name
 routers.get('/games/similar/:slug', getSimilarGames);                   // Tìm game tương tự
+routers.get('/games/top-played', getTopPlayedGamesController);
+routers.get('/games/newest', getNewestGamesController);
+routers.get('/games/genre/:genre', getGamesByGenreController);
 routers.post('/game/increment/:slug', incrementGamePlayerCountController);
 
 

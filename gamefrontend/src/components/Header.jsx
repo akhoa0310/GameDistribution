@@ -36,7 +36,7 @@ const Header = () => {
               <Nav.Item>
                 <Nav.Link as={Link} to="/support">Support</Nav.Link>
               </Nav.Item>
-              <Nav.Item>
+              <Nav.Item style={searchStyle}>
                 <GameSearch/>
               </Nav.Item>
               <Nav.Item>
@@ -67,3 +67,7 @@ const Header = () => {
 };
 
 export default Header;
+
+const searchStyle = {
+  marginRight: '1rem', // Tạo khoảng cách giữa các mục Nav
+};

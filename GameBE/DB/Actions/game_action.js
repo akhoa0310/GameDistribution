@@ -448,3 +448,43 @@ export const incrementPlayerCount = async (slug) => {
         throw new Error(error.message);
     }
 };
+
+export const getTopPlayedGames = async () => {
+    try {
+        const topGames = await Game.findAll({
+            order: [['player_count', 'DESC']], // Sắp xếp theo player_count giảm dần
+            limit: 10, // Lấy tối đa 10 game
+            attributes: ['game_id', 'game_name', 'player_count', 'image_file_path','slug'] // Chỉ lấy các trường cần thiết
+        });
+        return topGames;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+// action/gameActions.js
+export const getNewestGames = async () => {
+    try {
+        const newestGames = await Game.findAll({
+            order: [['date_release', 'DESC']], // Sắp xếp theo date_release giảm dần để lấy game mới nhất trước
+            limit: 10, // Lấy tối đa 10 game
+            attributes: ['game_id', 'game_name', 'date_release', 'image_file_path','slug'] // Chỉ lấy các trường cần thiết
+        });
+        return newestGames;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+export const getGamesByGenre = async (genre) => {
+    try {
+        const games = await Game.findAll({
+            where: { genres: genre },  // Điều kiện lọc theo thể loại
+            limit: 10,                 // Giới hạn tối đa 10 game
+            attributes: ['game_id', 'game_name', 'date_release', 'image_file_path','slug'], // Các trường cần lấy
+        });
+        return games;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
