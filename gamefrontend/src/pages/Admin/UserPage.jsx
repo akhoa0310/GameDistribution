@@ -8,7 +8,11 @@ const UserPage = () => {
 
     // Lấy danh sách người dùng từ API
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/all`)
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/all`,  {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+        })
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('Failed to fetch users'); // Bắt lỗi khi response không thành công

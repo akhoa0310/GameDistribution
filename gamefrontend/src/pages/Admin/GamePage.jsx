@@ -29,7 +29,7 @@ const GamePage = () => {
 
     // Fetch developer options
     useEffect(() => {
-        fetch('${process.env.REACT_APP_BACKEND_URL}/api/games/count/users')
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/games/count/users`)
             .then((res) => res.json())
             .then((data) => setDeveloperOptions(data))
             .catch((error) => console.error('Error:', error));

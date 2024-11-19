@@ -3,6 +3,7 @@ import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
 import Menu from './Menu.jsx';
 import GamePage from './GamePage.jsx';
 import UserPage from './UserPage.jsx';
+import RequestList from './PublisherRequest.jsx';
 
 const AdminPage = () => {
     const [activeTab, setActiveTab] = useState("home"); // State để quản lý tab hiện tại
@@ -36,6 +37,9 @@ const AdminPage = () => {
                         <Nav.Item>
                             <Nav.Link eventKey="user">User</Nav.Link>
                         </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="request">Publisher Request</Nav.Link>
+                        </Nav.Item>
                     </Nav>
                 </Col>
 
@@ -51,6 +55,9 @@ const AdminPage = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="user">
                                 <UserPage/>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="request">
+                                <RequestList/>
                             </Tab.Pane>
                         </Tab.Content>
                     </Tab.Container>

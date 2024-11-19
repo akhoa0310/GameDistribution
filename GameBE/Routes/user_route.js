@@ -8,6 +8,7 @@ import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,g
 import { getGamesByUserHistory, addGameHistoryController} from '../Controller/history_controller.js';
 import { addCommentController,getCommentsBySlugController } from '../Controller/comment_controller.js';
 import { addVoteController,getAverageRatingController,getUserRatingController } from '../Controller/vote_controller.js';
+import { handleCreateRequest,handleAcceptRequest,handleRejectRequest,handleGetRequestsWithUserNames} from '../Controller/request_controller.js';
 import { verifyToken,checkUseJWT } from '../Middleware/JWTAction.js';
 import upload from '../Middleware/upload.js'
 
@@ -43,7 +44,7 @@ routers.post('/game/increment/:slug', incrementGamePlayerCountController);
 routers.get('/mygame', checkUseJWT(), getGamesByUserId);                  // Lấy game của user
 routers.put('/game/update_info/:id', checkUseJWT([2]), handleUpdateGame);    // Cập nhật thông tin game
 routers.get('/game/sendgame/:slug', downloadGameFolder);             // Tải xuống folder game (không cần JWT)
-routers.post('/game/upgame', checkUseJWT(), upload.fields([{ name: 'file_path' }, { name: 'image_file_path' }]), createGame); // Upload game
+routers.post('/game/upgame', checkUseJWT([1,2]), upload.fields([{ name: 'file_path' }, { name: 'image_file_path' }]), createGame); // Upload game
 
 // History routes yêu cầu check JWT
 routers.post('/addhistory/:slug', checkUseJWT(), addGameHistoryController);  // Thêm lịch sử game
@@ -62,5 +63,12 @@ routers.get('/games/:slug/vote', getAverageRatingController);              // L�
 routers.post('/games/:slug/vote', checkUseJWT(), addVoteController);         // Thêm vote
 routers.get('/games/:slug/user-rating', checkUseJWT(), getUserRatingController); // Lấy rating của user
 
-//Role( 0:user, 1:publisher, 2:admin)
+
+routers.get('/request/get',checkUseJWT([2]), handleGetRequestsWithUserNames);// Route lấy danh sách requests với thông tin user
+
+routers.post('/request/publisher',checkUseJWT([0]), handleCreateRequest) // Route tao request
+routers.put('/request/accept/:requestId',checkUseJWT([2]), handleAcceptRequest);  // Route chấp nhận request
+routers.put('/request/reject/:requestId',checkUseJWT([2]), handleRejectRequest);  // Route từ chối request
+
+//Role( 0:user, 1:publisher, 2:admin) 
 export default routers;
