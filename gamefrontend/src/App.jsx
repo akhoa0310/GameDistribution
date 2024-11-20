@@ -11,7 +11,7 @@ import AdminPage from './pages/Admin/Admin.jsx';
 import {AuthProvider } from "./services/AuthContext.js";
 import Footer from './components/Footer.jsx';
 
-const App = () => {
+const App = () => { 
   return (
     <AuthProvider>
       <Router>

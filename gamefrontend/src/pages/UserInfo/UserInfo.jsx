@@ -4,12 +4,13 @@ import UserProfile from './UserProfile';
 import GameHistory from './GameHistory';
 import MyGame from './MyGame';
 import AddGame from '../../components/AddGame';
+import PublisherRequest from './PublisherRequest';
 
 
 function UserInfo() {
   return (
     <div>
-      <UserProfile/>
+      <UserProfile/>  
       
       <div className="container mt-4">
             <Tabs defaultActiveKey="myGame" id="game-tabs" className="mb-3">
@@ -21,6 +22,7 @@ function UserInfo() {
                 </Tab>
                 <Tab eventKey="addGame" title="AddGame">
                     <AddGame/>
+                    <PublisherRequest/>
                 </Tab>
             </Tabs>
         </div>
