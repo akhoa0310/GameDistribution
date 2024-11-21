@@ -7,7 +7,7 @@ import LoginRegisterModal from './LoginModal';
 import GameSearch from './SearchGame.jsx';
 
 const Header = () => {
-  const { isLoggedIn, userInfo, logout } = useAuth();
+  const { isAuthenticated,user_name, logout } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
@@ -40,9 +40,9 @@ const Header = () => {
                 <GameSearch/>
               </Nav.Item>
               <Nav.Item>
-                {isLoggedIn ? (
+                {isAuthenticated ? (
                   <NavDropdown
-                    title={`Hi, ${userInfo.user_name}`}
+                    title={`Hi, ${user_name}`}
                     id="user-dropdown"
                     align="end"
                     show={showDropdown}

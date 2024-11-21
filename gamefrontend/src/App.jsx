@@ -9,6 +9,7 @@ import GameDetail from './pages/GameDetail/Game_Detail.jsx'
 import UserInfo from './pages/UserInfo/UserInfo.jsx';
 import AdminPage from './pages/Admin/Admin.jsx';
 import {AuthProvider } from "./services/AuthContext.js";
+import ProtectedRoute from "./services/ProtectRoute.js"
 import Footer from './components/Footer.jsx';
 
 const App = () => { 
@@ -22,8 +23,22 @@ const App = () => {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/support" element={<Support />} />
           <Route path="/games/:slug" element={<GameDetail />} />
-          <Route path="/userinfo" element={<UserInfo/>} />
-          <Route path="/pageadmin" element={<AdminPage/>} />
+          <Route
+            path="/userinfo"
+            element={
+              <ProtectedRoute allowedRoles={['0', '1', '2']}>  
+                <UserInfo />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="pageadmin"
+            element={
+              <ProtectedRoute allowedRoles={['2']}>  
+                <AdminPage />
+              </ProtectedRoute>   
+            }
+          />
           {/* Route chặn cho các route không hợp lệ */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
