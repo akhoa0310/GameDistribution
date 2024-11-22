@@ -29,7 +29,7 @@ const Banner =()=> {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '40px 20px',
-        backgroundColor: '#f8f9fa',
+        backgroundColor: 'dark-subtle',
       },
       textContent: {
         textAlign: 'center',
@@ -70,3 +70,4 @@ const Banner =()=> {
       },
     };
 export default Banner;
+    
