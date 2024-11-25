@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Service MySQL
+  db-mysql:
+    image: mysql:5.7.40
+    container_name: db-mysql
+    restart: always
+    ports:
+      - "3308:3306"  # ánh xạ cổng host 3308 tới cổng container 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: gamedata
+    volumes:
+      - 505f069841354b97f3e28d886e3a7fb955b0e61e19bfed5a9e109ecad36aec76:/var/lib/mysql
+    networks:
+      - app_network
+
+  # Service Backend (GameBE)
+  backend:
+    build:
+      context: ./GameBE  # Thư mục chứa mã nguồn backend
+    container_name: game-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db-mysql
+      DB_USER: root
+      DB_PASSWORD: 123456
+      DB_NAME: gamedata
+    depends_on:
+      - db-mysql
+    networks:
+      - app_network
+
+  # Service Frontend (GameFE)
+  frontend:
+    build:
+      context: ./GameFE  # Thư mục chứa mã nguồn frontend
+    container_name: game-frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+# Networks
+networks:
+  app_network:
+    driver: bridge
+
+# Volumes
+volumes:
+  505f069841354b97f3e28d886e3a7fb955b0e61e19bfed5a9e109ecad36aec76:
+    external: true
