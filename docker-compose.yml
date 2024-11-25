@@ -39,9 +39,9 @@ services:
       context: ./GameFE  # Thư mục chứa mã nguồn frontend
     container_name: game-frontend
     ports:
-      - "3001:3001"
-    depends_on:
-      - backend
+      - "3001:80"
+    # depends_on:
+    #   - backend
     networks:
       - app_network
 

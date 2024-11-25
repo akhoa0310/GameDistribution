@@ -22,8 +22,8 @@ FROM nginx:alpine
 # Sao chép file build của React vào thư mục phục vụ của Nginx
 COPY --from=0 /usr/src/app/build /usr/share/nginx/html
 
-# Mở cổng 80 cho Nginx
-EXPOSE 80
+# Mở cổng cho Nginx
+EXPOSE 3001
 
 # Khởi động Nginx
 CMD ["nginx", "-g", "daemon off;"]
