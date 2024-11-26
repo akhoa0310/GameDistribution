@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { InputGroup, FormControl, Dropdown, Image, Button } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function GameSearch() {
   const [query, setQuery] = useState('');
@@ -29,6 +30,7 @@ function GameSearch() {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
+          
           const data = await response.json();
           setGames(data.games);
           setShowDropdown(true);
@@ -56,11 +58,11 @@ function GameSearch() {
     };
   }, []);
 
-  // Chuyển đến trang game riêng khi nhấp vào game
-  const handleGameClick = (slug) => {
-    const gameUrl = `${window.location.origin}/games/${slug}`;
-    window.location.href = gameUrl;
-  };
+  // // Chuyển đến trang game riêng khi nhấp vào game
+  // const handleGameClick = (slug) => {
+  //   const gameUrl = `${window.location.origin}/games/${slug}`;
+  //   window.location.href = gameUrl;
+  // };
 
   return (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }} ref={searchRef}>
@@ -84,20 +86,26 @@ function GameSearch() {
           {games.map((game) => (
             <Dropdown.Item
               key={game.game_id}
-              onClick={() => handleGameClick(game.slug)} // Chuyển hướng khi nhấp vào game
               style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <Image 
-                src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`} 
-                rounded style={{ width: '40px', height: '40px', marginRight: '10px' }}
-                onError={(e) => {
-                  e.target.onerror = null; // Ngăn lặp vô hạn nếu ảnh fallback cũng bị lỗi
-                  e.target.src = '/Logo XGame/x1.png'; // Ảnh mặc định
-                  }} />
-              <div>
-                <strong>{game.User.user_name}</strong>
-                <div>{game.game_name}</div>
-              </div>
+                <Link 
+                  to={`/games/${game.slug}`} 
+                  style={{ display: 'flex', textDecoration: 'none', color: 'inherit', width: '100%' }}
+                >
+                <Image 
+                  src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`} 
+                  rounded 
+                  style={{ width: '40px', height: '40px', marginRight: '10px' }}
+                  onError={(e) => {
+                    e.target.onerror = null; // Ngăn lặp vô hạn nếu ảnh fallback cũng bị lỗi
+                    e.target.src = '/Logo XGame/x1.png'; // Ảnh mặc định
+                  }} 
+                />
+                <div>
+                  <strong>{game.User.user_name}</strong>
+                  <div>{game.game_name}</div>
+                </div>
+              </Link>
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>

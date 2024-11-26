@@ -22,6 +22,9 @@ FROM nginx:alpine
 # Sao chép file build của React vào thư mục phục vụ của Nginx
 COPY --from=0 /usr/src/app/build /usr/share/nginx/html
 
+# Copy file cấu hình nginx tùy chỉnh (nếu có)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Mở cổng cho Nginx
 EXPOSE 3001
 

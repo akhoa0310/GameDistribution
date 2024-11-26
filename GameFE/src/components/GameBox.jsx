@@ -1,35 +1,33 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
 const GameBox = ({ title, developer, imageUrl, gameUrl, played_time }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    // Điều hướng tới URL của game
-    window.location.href = gameUrl;
-  };
-
   return (
-    <Card 
-      className="game-card" 
-      style={styles.gameCard}
-      onClick={handleClick}
+    <a 
+      href={gameUrl} 
+      style={{ textDecoration: 'none' }} // Loại bỏ gạch chân mặc định của thẻ <a>
     >
-      <Card.Img 
-        variant="top" src={imageUrl} 
-        style={styles.gameImage} 
-        loading='lazy'
-        onError={(e) => {
-          e.target.onerror = null; // Ngăn lặp vô hạn nếu ảnh fallback cũng bị lỗi
-          e.target.src = '/Logo XGame/x1.png'; // Ảnh mặc định
-          }} />
-      <Card.Body>
-        <Card.Title style={styles.gameTitle}>{title}</Card.Title>
-        <Card.Text style={styles.gameDeveloper}>{developer}</Card.Text>
-        {played_time && <Card.Text style={styles.playedTime}>Played on: {played_time}</Card.Text>}
-      </Card.Body>
-    </Card>
+      <Card 
+        className="game-card" 
+        style={styles.gameCard}
+      >
+        <Card.Img 
+          variant="top" 
+          src={imageUrl} 
+          style={styles.gameImage} 
+          loading="lazy"
+          onError={(e) => {
+            e.target.onerror = null; // Ngăn lặp vô hạn nếu ảnh fallback cũng bị lỗi
+            e.target.src = '/Logo XGame/x1.png'; // Ảnh mặc định
+          }} 
+        />
+        <Card.Body>
+          <Card.Title style={styles.gameTitle}>{title}</Card.Title>
+          <Card.Text style={styles.gameDeveloper}>{developer}</Card.Text>
+          {played_time && <Card.Text style={styles.playedTime}>Played on: {played_time}</Card.Text>}
+        </Card.Body>
+      </Card>
+    </a>
   );
 };
 
