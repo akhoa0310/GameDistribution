@@ -9,7 +9,7 @@ dotenv.config(); // Tải các biến môi trường từ file .env
 
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:3001', // Thay thế bằng địa chỉ client của bạn
+    origin: process.env.FRONTEND_URL, // Thay thế bằng địa chỉ client của bạn
     credentials: true // Cho phép gửi cookie trong các yêu cầu từ client
   }));
 // Middleware để parse dữ liệu JSON từ các request
@@ -36,7 +36,7 @@ const startServer = async () => {
             console.log('Database & tables have been updated.');
         });
         // Khởi chạy server
-        const PORT = process.env.PORT || 3000;
+        const PORT = process.env.PORT;
         app.listen(PORT, () => {
             console.log(`Server đang chạy trên cổng ${PORT}`);
         }); 

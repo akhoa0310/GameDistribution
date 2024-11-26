@@ -17,7 +17,7 @@ COPY . .
 RUN chmod -R 755 .
 
 # Mở cổng 5000 cho ứng dụng
-EXPOSE 3000
+EXPOSE 3910
 
 # Lệnh chạy ứng dụng
 CMD ["npm", "start"]

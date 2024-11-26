@@ -26,7 +26,7 @@ COPY --from=0 /usr/src/app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Mở cổng cho Nginx
-EXPOSE 3001
+EXPOSE 3911
 
 # Khởi động Nginx
 CMD ["nginx", "-g", "daemon off;"]
