@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:  # Service MySQL
+  db-mysql:
+    image: mysql:5.7.40
+    container_name: db-mysql
+    restart: always
+    ports:
+      - "3309:3306"  # ánh xạ cổng host 3308 tới cổng container 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: XGame@2024
+      MYSQL_DATABASE: khoansa
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
 
   # Service Backend (GameBE)
   backend:
@@ -11,7 +24,7 @@ services:  # Service MySQL
       - "3910:3910"
     environment:
       DB_HOST: db-mysql
-      DB_USER: khoansa
+      DB_USER: root
       DB_PASSWORD: XGame@2024
       DB_NAME: khoansa
     depends_on:
@@ -26,8 +39,8 @@ services:  # Service MySQL
     container_name: game-frontend
     ports:
       - "3911:80"
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
     networks:
       - app_network
 
@@ -36,7 +49,5 @@ networks:
   app_network:
     driver: bridge
 
-# Volumes
 volumes:
-  505f069841354b97f3e28d886e3a7fb955b0e61e19bfed5a9e109ecad36aec76:
-    external: true
+  db_data:
