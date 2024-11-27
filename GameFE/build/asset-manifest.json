@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.4338008a.css",
-    "main.js": "/static/js/main.a3f056f8.js",
+    "main.js": "/static/js/main.29b6dcec.js",
     "static/js/453.bcc2be64.chunk.js": "/static/js/453.bcc2be64.chunk.js",
     "static/media/Logo_XGame-011.png": "/static/media/Logo_XGame-011.d4887792954a96ed7e98.png",
     "static/media/Logo_XGame-02.png": "/static/media/Logo_XGame-02.95f821d8f7c66ddd63d9.png",
     "static/media/bannerimage.jpg": "/static/media/bannerimage.83bf48c608d37ec0970f.jpg",
     "index.html": "/index.html",
     "main.4338008a.css.map": "/static/css/main.4338008a.css.map",
-    "main.a3f056f8.js.map": "/static/js/main.a3f056f8.js.map",
+    "main.29b6dcec.js.map": "/static/js/main.29b6dcec.js.map",
     "453.bcc2be64.chunk.js.map": "/static/js/453.bcc2be64.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4338008a.css",
-    "static/js/main.a3f056f8.js"
+    "static/js/main.29b6dcec.js"
   ]
 }
