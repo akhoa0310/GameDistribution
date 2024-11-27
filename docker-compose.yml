@@ -22,7 +22,7 @@ services:
       context: ./GameBE  # Thư mục chứa mã nguồn backend
     container_name: game-backend
     ports:
-      - "3000:3000"
+      - "3910:3910"
     environment:
       DB_HOST: db-mysql
       DB_USER: root
@@ -39,7 +39,7 @@ services:
       context: ./GameFE  # Thư mục chứa mã nguồn frontend
     container_name: game-frontend
     ports:
-      - "3910:80"
+      - "3911:80"
     # depends_on:
     #   - backend
     networks:
