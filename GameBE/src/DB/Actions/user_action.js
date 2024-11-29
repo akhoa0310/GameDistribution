@@ -48,6 +48,15 @@ export const login = async (email, password) => {
   return { token };
 };
 
+export const verifyToken = (token) => {
+  if (!token) {
+    throw new Error('Not authenticated');
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  return decoded;
+};
+
 // Hàm cập nhật tên hoặc email người dùng
 export const updateUserNameOrEmail = async (userId, newUserName, newEmail) => {
   try {
