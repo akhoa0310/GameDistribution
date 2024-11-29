@@ -1,5 +1,5 @@
 // controllers/authController.js
-import {register,login,updateUserNameOrEmail,updateUser,updatePassword,findUserInfoById,getAllUsers } from '../DB/Actions/user_action.js';
+import {register,login,verifyToken,updateUserNameOrEmail,updateUser,updatePassword,findUserInfoById,getAllUsers } from '../DB/Actions/user_action.js';
 import cookieParser from 'cookie-parser';
 // Controller đăng ký người dùng
 export const registerUser = async (req, res) => {
@@ -19,6 +19,35 @@ export const loginUser = async (req, res) => {
     const { user, token } = await login(email, password);
     res.cookie('jwt',token,{ sameSite: 'None', secure: true })
     res.status(200).json({ message: 'Login successful', user, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const checkLoginStatus = (req, res) => {
+  try {
+    const token = req.cookies.jwt; // Lấy token từ cookies
+    const user = verifyToken(token); // Gọi action để xác thực token
+
+    res.status(200).json({ 
+      isAuthenticated: true, 
+      user_name: user.user_name, 
+      role: user.role 
+    });
+  } catch (error) {
+    res.status(200).json({ 
+      isAuthenticated: false, 
+      user_name: null, 
+      role: null 
+    });
+  }
+};
+
+export const logoutUserController = (req, res) => {
+  try {
+    // Xóa cookie JWT từ phía server
+    res.clearCookie('jwt', { sameSite: 'None', secure: true });
+    res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

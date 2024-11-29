@@ -1,6 +1,6 @@
 // routes/userRoutes.js
 import express from 'express';
-import { registerUser, loginUser,handleUpdateUserNameOrEmail,getUserInfoById,handleUpdatePassword,handleGetAllUsers,updateUserController} from '../Controller/user_controller.js';
+import { registerUser, loginUser,checkLoginStatus,logoutUserController,handleUpdateUserNameOrEmail,getUserInfoById,handleUpdatePassword,handleGetAllUsers,updateUserController} from '../Controller/user_controller.js';
 import { getAllGames,getGameBySlug,getGames,getGamesByName,getGamesWithFilters,getGameCountByGenres,
     getGameCountByPlayerNumber,getGameCountByUser,createGame,getSimilarGames,handleUpdateGame,
     getGamesByUserId,downloadGameFolder,incrementGamePlayerCountController,getTopPlayedGamesController,
@@ -16,7 +16,8 @@ const routers = express.Router();
 
 routers.post('/users/register', registerUser);  // Đăng ký
 routers.post('/users/login', loginUser);        // Đăng nhập
-
+routers.get('/auth/check-login', checkLoginStatus);
+routers.post('/auth/logout', logoutUserController);
 // Các route user yêu cầu check JWT
 routers.get('/user/get', checkUseJWT(), getUserInfoById);  // Lấy thông tin user theo ID
 routers.put('/user/update_profile', checkUseJWT(), handleUpdateUserNameOrEmail); // Cập nhật tên/email
