@@ -17,7 +17,7 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const { user, token } = await login(email, password);
-    res.cookie('jwt',token,{ sameSite: 'None', secure: true })
+    res.cookie('jwt',token,{ maxAge: 60 * 60 * 1000, })
     res.status(200).json({ message: 'Login successful', user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });

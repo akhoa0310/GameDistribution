@@ -9,14 +9,14 @@ dotenv.config(); // Tải các biến môi trường từ file .env
 
 const app = express();
 app.use(cors({
-    origin: [process.env.FRONTEND_URL,'http://fe3.backendintern.online'],// Thay thế bằng địa chỉ client của bạn
+    origin: [process.env.FRONTEND_URL, process.env.FRONTEND_IP],// Thay thế bằng địa chỉ client của bạn
     credentials: true // Cho phép gửi cookie trong các yêu cầu từ client
   }));
 // Middleware để parse dữ liệu JSON từ các request
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cookieParser());        
+app.use(cookieParser());
 
 // Định nghĩa các routes
 app.use('/api', routers);
