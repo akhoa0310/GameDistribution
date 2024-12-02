@@ -75,7 +75,7 @@ const MyGame = () => {
               played_time={game.played_time}
               title={game.game_name}
               developer={game.User.user_name}
-              imageUrl={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`}
+              imageUrl={`${process.env.REACT_APP_BACKEND_URL}${game.image_file_path}`}
               gameUrl={`${window.location.origin}/games/${game.slug}`}
             />
           </Col>

@@ -43,7 +43,7 @@ const GameBanner = () => {
         <Link to={`/games/${game.slug}`}>
             <Card className="ratio ratio-16x9">
                 <Card.Img 
-                    src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path || ''}`} 
+                    src={`${process.env.REACT_APP_BACKEND_URL}/${game.image_file_path || ''}`} 
                     alt={game.game_name} 
                     className="game-image"
                     onError={(e) => {

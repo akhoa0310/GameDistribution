@@ -347,9 +347,13 @@ export const addGame = async (gameData, zipFilePath, imageFilePath) => {
 
     const game_id = newGame.game_id;
 
+    const storageDirectory = path.join('../GameStorage/games');
+    if (!fs.existsSync(storageDirectory)) {
+        fs.mkdirSync(storageDirectory, { recursive: true });
+    }
     // Tạo thư mục đích với tên slug
     const folderName = `${slugify(game_name, { lower: true, strict: true })}-${game_id}`;
-    const destinationPath = path.join('public/games', folderName);
+    const destinationPath = path.join(storageDirectory, folderName);
 
     // Tạo thư mục đích nếu chưa tồn tại
     if (!fs.existsSync(destinationPath)) {
@@ -407,8 +411,7 @@ export const createGameZipFile = async (slug, res) => {
         }
 
         // Tạo file ZIP từ thư mục game
-        const zipFilePath = path.join('public/games', `${slug}.zip`);
-        const output = fs.createWriteStream(zipFilePath);
+        
         const archive = archiver('zip', { zlib: { level: 9 } });
 
         output.on('close', () => console.log('ZIP file has been created'));

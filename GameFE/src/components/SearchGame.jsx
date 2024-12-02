@@ -93,7 +93,7 @@ function GameSearch() {
                   style={{ display: 'flex', textDecoration: 'none', color: 'inherit', width: '100%' }}
                 >
                 <Image 
-                  src={`${process.env.REACT_APP_BACKEND_URL}/public${game.image_file_path}`} 
+                  src={`${process.env.REACT_APP_BACKEND_URL}${game.image_file_path}`} 
                   rounded 
                   style={{ width: '40px', height: '40px', marginRight: '10px' }}
                   onError={(e) => {

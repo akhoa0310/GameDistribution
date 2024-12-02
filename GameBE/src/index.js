@@ -23,6 +23,7 @@ app.use('/api', routers);
 
 // Cấu hình Express để phục vụ file tĩnh
 app.use('/public', express.static(path.resolve('public')));
+app.use('/games', express.static(path.resolve('../GameStorage/games')));
 
 // Kết nối với cơ sở dữ liệu và khởi chạy server
 const startServer = async () => {
