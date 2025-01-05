@@ -4,7 +4,7 @@ import UserProfile from '../UserInfo/UserProfile';// Import component UserProfil
 const Menu = () => {
     return (
         <div>
-            <h2>User Profile</h2>
+            <h2>Thông tin người dùng</h2>
             <UserProfile /> {/* Hiển thị thông tin người dùng từ UserProfile */}
         </div>
     );

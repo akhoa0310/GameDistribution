@@ -11,7 +11,7 @@ const Footer = () => {
           <Col md={4} className="text-center mb-2"> {/* Giảm margin bottom */}
             <img src={Logo_XGame} alt="XGame Studio" style={{ width: '125px' }} /> {/* Giảm kích thước logo */}
             <div className="d-flex justify-content-center mt-2">
-              <a href="#" className="text-white mx-1" style={{ fontSize: '14px' }}> {/* Giảm kích thước icon */}
+              <a href="https://www.facebook.com/xgamestudio" className="text-white mx-1" style={{ fontSize: '14px' }}> {/* Giảm kích thước icon */}
                 <FaFacebookF />
               </a>
               <a href="#" className="text-white mx-1" style={{ fontSize: '14px' }}>
@@ -44,10 +44,10 @@ const Footer = () => {
           </Col>
           <Col md={4} className="text-center mb-2">
             <h6>XGame Studio</h6> {/* Giảm kích thước chữ tiêu đề */}
-            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">About Us</a></p>
-            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">Careers</a></p>
-            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">News</a></p>
-            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="#" className="text-white">Values</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="https://xgamestudio.com/" className="text-white">Về chúng tôi</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="https://xgamestudio.com/" className="text-white">Công việc</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="https://xgamestudio.com/" className="text-white">Thông tin</a></p>
+            <p style={{ fontSize: '14px', margin: '5px 0' }}><a href="https://xgamestudio.com/" className="text-white">Giá trị</a></p>
           </Col>
         </Row>
       </Container>

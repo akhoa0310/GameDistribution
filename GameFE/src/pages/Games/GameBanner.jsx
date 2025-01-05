@@ -65,7 +65,7 @@ const GameBanner = () => {
                         </Carousel.Item>
                     ))}
                 </Carousel>
-                <h3 className="category-title">Top Picks</h3>
+                <h3 className="category-title">Được chọn nhiều nhất</h3>
             </Col>
             <Col>
                 <Carousel activeIndex={christmasIndex} onSelect={(selectedIndex) => setChristmasIndex(selectedIndex)} controls={true} indicators={false} interval={null}>
@@ -85,7 +85,7 @@ const GameBanner = () => {
                         </Carousel.Item>
                     ))}
                 </Carousel>
-                <h3 className="category-title">Best New</h3>
+                <h3 className="category-title">Mới nhất</h3>
             </Col>
         </Row>
     );

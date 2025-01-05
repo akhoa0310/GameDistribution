@@ -97,54 +97,61 @@ const GameIframe = () => {
                   zIndex: 10,
                 }}
               >
-                Play Now
+                Chơi ngay
               </Button>
             </>
           )}
         </Col>
       </Row>
-
+      <GameRating slug={slug} />
       {/* Bảng thông tin chi tiết của game */}
       <Row>
         <Col>
-          <GameRating slug={slug} />
-          <h3>Game Information</h3>
-          <Table striped bordered hover>
-            <tbody>
-              <tr>
-                <th>Game Name:</th>
-                <td>{gameData.game_name}</td>
-              </tr>
-              <tr>
-                <th>Description:</th>
-                <td>{gameData.game_description}</td>
-              </tr>
-              <tr>
-                <th>Instructions:</th>
-                <td>{gameData.instructions}</td>
-              </tr>
-              <tr>
-                <th>Release Date:</th>
-                <td>{new Date(gameData.date_release).toDateString()}</td>
-              </tr>
-              <tr>
-                <th>Genres:</th>
-                <td>{gameData.genres}</td>
-              </tr>
-              <tr>
-                <th>Player Count:</th>
-                <td>{gameData.player_count}</td>
-              </tr>
-              <tr>
-                <th>Player Number:</th>
-                <td>{gameData.player_number}</td>
-              </tr>
-              <tr>
-                <th>Player Name:</th>
-                <td>{gameData.User.user_name}</td>
-              </tr>
-            </tbody>
-          </Table>
+            {/* Game Title */}
+          <div style={{ marginBottom: '20px' }}>
+            <h2>
+              Tên trò chơi: <strong>{gameData.game_name}</strong>
+            </h2>
+          </div>
+              {/* Publisher */}
+          <div style={{ marginBottom: '20px' }}>
+            <span>Phát hành bởi: </span>
+            <strong>{gameData.User.user_name}</strong>
+          </div>
+
+          {/* Genres */}
+          <div style={{ marginBottom: '20px' }}>
+            <span>Thể loại: </span>
+            <strong>{gameData.genres}</strong>
+          </div>
+
+          {/* Release Date */}
+          <div style={{ marginBottom: '20px' }}>
+            <span>Ngày phát hành: </span>
+            <strong>{new Date(gameData.date_release).toLocaleDateString()}</strong>
+          </div>
+
+          {/* Player Information */}
+          <div style={{ marginBottom: '20px' }}>
+            <span>Số lượt chơi: </span>
+            <strong>{gameData.player_count}</strong>
+          </div>
+          <div style={{ marginBottom: '20px' }}>
+            <span>Số người chơi: </span>
+            <strong>{gameData.player_number}</strong> players
+          </div>
+
+          {/* Description */}
+          <div style={{ marginBottom: '20px' }}>
+            <h3>Mô tả</h3>
+            <p>{gameData.game_description}</p>
+          </div>
+
+          {/* Instructions */}
+          <div style={{ marginBottom: '20px' }}>
+            <h3>Hướng dẫn</h3>
+            <p>{gameData.instructions}</p>
+          </div>
         </Col>
       </Row>
       <CommentSection slug={slug}/>

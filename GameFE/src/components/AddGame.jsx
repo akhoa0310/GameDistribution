@@ -57,33 +57,33 @@ const AddGameButton = ({ refreshGames }) => {
       });
 
       if (response.ok) {
-        alert('Game added successfully!');
+        alert('Thêm game thành công!');
         refreshGames();
         handleClose();
       } else {
         const data = await response.json();
-        setError(data.error || 'Failed to add game');
+        setError(data.error || 'Thêm game thất bại');
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('Error adding game');
+      setError('Lỗi thêm game');
     }
   };
 
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Add Game
+        Thêm Game
       </Button>
 
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Game</Modal.Title>
+          <Modal.Title>Thêm Game mới</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="gameName">
-              <Form.Label>Game Name</Form.Label>
+              <Form.Label>Tên Game</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter game name"
@@ -94,7 +94,7 @@ const AddGameButton = ({ refreshGames }) => {
             </Form.Group>
 
             <Form.Group controlId="genre">
-              <Form.Label>Genre</Form.Label>
+              <Form.Label>Thể loại</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter genre"
@@ -125,7 +125,7 @@ const AddGameButton = ({ refreshGames }) => {
             </Form.Group>
 
             <Form.Group controlId="gameDescription">
-              <Form.Label>Game Description</Form.Label>
+              <Form.Label>Mô tả trò chơi</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -137,7 +137,7 @@ const AddGameButton = ({ refreshGames }) => {
             </Form.Group>
 
             <Form.Group controlId="instructions">
-              <Form.Label>Instructions</Form.Label>
+              <Form.Label>Hướng dẫn</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
@@ -149,7 +149,7 @@ const AddGameButton = ({ refreshGames }) => {
             </Form.Group>
 
             <Form.Group controlId="playerNumber">
-              <Form.Label>Player Number</Form.Label>
+              <Form.Label>Số người chơi</Form.Label>
               <Form.Control
                 type="textarea"
                 placeholder="Enter number of players"
@@ -162,7 +162,7 @@ const AddGameButton = ({ refreshGames }) => {
             {error && <p className="text-danger">{error}</p>}
 
             <Button variant="primary" type="submit">
-              Add Game
+              Thêm game
             </Button>
           </Form>
         </Modal.Body>

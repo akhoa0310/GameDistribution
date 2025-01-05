@@ -102,8 +102,8 @@ function GameSearch() {
                   }} 
                 />
                 <div>
-                  <strong>{game.User.user_name}</strong>
-                  <div>{game.game_name}</div>
+                  <strong>{game.game_name}</strong>
+                  <div>{game.User.user_name}</div>
                 </div>
               </Link>
             </Dropdown.Item>

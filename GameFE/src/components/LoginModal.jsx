@@ -86,17 +86,17 @@ const LoginRegisterModal = () => {
           <Tab.Container activeKey={key} onSelect={(k) => setKey(k)}>
             <Nav variant="tabs" className="d-flex flex-row justify-content-center mb-2">
               <Nav.Item>
-                <Nav.Link eventKey="login">Login</Nav.Link>
+                <Nav.Link eventKey="login">Đăng nhập</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="register">Register</Nav.Link>
+                <Nav.Link eventKey="register">Đăng ký</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content>
               <Tab.Pane eventKey="login">
                 <Form onSubmit={handleLogin}>
                   <Form.Group className="mb-3" controlId="formLoginEmail">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>Email </Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="Enter email"
@@ -107,7 +107,7 @@ const LoginRegisterModal = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formLoginPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Mật khẩu </Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="Password"
@@ -125,7 +125,7 @@ const LoginRegisterModal = () => {
               <Tab.Pane eventKey="register">
                 <Form onSubmit={handleRegister}>
                   <Form.Group className="mb-3" controlId="formRegisterFullName">
-                    <Form.Label>Full Name</Form.Label>
+                    <Form.Label>Tên người dùng</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter full name"
@@ -147,7 +147,7 @@ const LoginRegisterModal = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formRegisterPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Mật khẩu</Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="Password"
@@ -158,7 +158,7 @@ const LoginRegisterModal = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formRegisterConfirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label>Nhập lại mật khẩu</Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="Confirm password"
@@ -169,7 +169,7 @@ const LoginRegisterModal = () => {
                     />
                   </Form.Group>
                   <Button variant="primary" type="submit" className="w-100">
-                    Register
+                    Đăng ký
                   </Button>
                 </Form>
               </Tab.Pane>

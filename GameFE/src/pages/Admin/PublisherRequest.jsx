@@ -79,9 +79,9 @@ const RequestList = () => {
           <thead>
             <tr>
               <th>#</th>
-              <th>User Name</th>
-              <th>Reason</th>
-              <th>Actions</th>
+              <th>Người dùng</th>
+              <th>Lý do</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -96,14 +96,14 @@ const RequestList = () => {
                     size="sm"
                     onClick={() => handleAccept(req.id)}
                   >
-                    Accept
+                    Đồng ý
                   </Button>{' '}
                   <Button
                     variant="danger"
                     size="sm"
                     onClick={() => handleReject(req.id)}
                   >
-                    Reject
+                    Từ chối
                   </Button>
                 </td>
               </tr>

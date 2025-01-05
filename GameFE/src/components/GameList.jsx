@@ -35,7 +35,7 @@ const GameList = () => {
 
   return (
     <Container className="py-4">
-      <h2 className="text-primary mb-4 text-center">Exclusive Games</h2>
+      <h2 className="text-primary mb-4 text-center">Trò chơi</h2>
       <Row className="gy-4">
         {loading
           ? [...Array(gamesPerPage)].map((_, index) => (

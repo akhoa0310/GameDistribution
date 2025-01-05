@@ -38,7 +38,7 @@ const SimilarGames = () => {
 
   return (
     <Container className="p-4 bg-light rounded">
-      <h2 className="text-center mb-4 text-primary">Similar Games</h2>
+      <h2 className="text-center mb-4 text-primary">Trò chơi tương tự</h2>
       <Row className="gy-4 flex-column">
         {similarGames.map((game) => (
           <div key={game.game_id} className="mb-3">

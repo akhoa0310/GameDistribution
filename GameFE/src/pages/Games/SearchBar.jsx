@@ -11,8 +11,8 @@ const SearchBar = ({ query, setQuery }) => {
         style={styles.searchInput}
       />
       <select style={styles.sortSelect}>
-        <option value="popular">Popular</option>
-        <option value="newest">Newest</option>
+        <option value="popular">Nổi tiếng</option>
+        <option value="newest">Mới nhất</option>
       </select>
     </div>
   );

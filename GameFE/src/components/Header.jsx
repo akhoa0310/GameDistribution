@@ -28,13 +28,13 @@ const Header = () => {
                 <Nav.Link as={Link} to="/game">Game</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to="/aboutus">About Us</Nav.Link>
+                <Nav.Link as={Link} to="https://xgamestudio.com/">Về chúng tôi</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to="/business">Business</Nav.Link>
+                <Nav.Link as={Link} to="/business">Kinh doanh</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to="/support">Support</Nav.Link>
+                <Nav.Link as={Link} to="/supporto">Hỗ trợ</Nav.Link>
               </Nav.Item>
               <Nav.Item style={searchStyle}>
                 <GameSearch/>
@@ -49,9 +49,9 @@ const Header = () => {
                     onMouseEnter={() => setShowDropdown(true)}
                     onMouseLeave={() => setShowDropdown(false)}
                   >
-                    <NavDropdown.Item as={Link} to="/userinfo">Profile</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/userinfo">Hồ sơ</NavDropdown.Item>
                     <NavDropdown.Item as="button" onClick={logout}>
-                      Logout
+                      Đăng xuất
                     </NavDropdown.Item>
                   </NavDropdown>
                 ) : (

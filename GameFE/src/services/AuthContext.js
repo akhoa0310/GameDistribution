@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode'; // Không cần dấu ngoặc nhọn
+import {jwtDecode} from 'jwt-decode'; 
 import Cookies from 'js-cookie';
 
 const AuthContext = createContext();

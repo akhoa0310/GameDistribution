@@ -6,9 +6,9 @@ const Banner =()=> {
     return (
         <section style={styles.highYieldSection}>
           <div style={styles.textContent}>
-            <h1 style={styles.heading}>High-Yield Solutions For Publishers</h1>
-            <p style={styles.paragraph}>Discover the advantages of partnering with GameDistribution</p>
-            <button style={styles.showMoreButton}>Show More &rarr;</button>
+            <h1 style={styles.heading}>Nền tảng chia sẻ trò chơi trực tuyến </h1>
+            <p style={styles.paragraph}>Giải pháp dành cho nhà phát triển</p>
+            {/* <button style={styles.showMoreButton}>Thêm &rarr;</button> */}
           </div>
           <div style={styles.imageContent}>
             <img 
