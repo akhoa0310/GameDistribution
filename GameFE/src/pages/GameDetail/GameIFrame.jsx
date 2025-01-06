@@ -68,43 +68,43 @@ const GameIframe = () => {
               visibility: isPlaying ? 'visible' : 'hidden', // Ẩn iframe khi chưa chơi game
             }}
           />
-          {/* Hình ảnh và nút play được căn lên trên iframe */}
-          {!isPlaying && (
-            <>
-              <Image
-                src={`${process.env.REACT_APP_BACKEND_URL}${gameData.image_file_path}`}
-                alt={gameData.game_name}
-                fluid
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: 10,
-                  width: '200px',
-                  marginBottom: '20px',
-                }}
-              />
-              <Button
-                variant="success"
-                size="lg"
-                onClick={handlePlayNow}
-                style={{
-                  position: 'absolute',
-                  top: '70%', // Dịch xuống một chút so với vị trí gốc
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  zIndex: 10,
-                }}
-              >
-                Chơi ngay
-              </Button>
-            </>
-          )}
-        </Col>
-      </Row>
-      <GameRating slug={slug} />
-      {/* Bảng thông tin chi tiết của game */}
+          
+                {!isPlaying && (
+                <>
+                  <Image
+                  src={`${process.env.REACT_APP_BACKEND_URL}${gameData.image_file_path}`}
+                  alt={gameData.game_name}
+                  fluid
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 10,
+                    width: '200px',
+                    marginBottom: '20px',
+                  }}
+                  />
+                  <Button
+                  variant="primary" // Đổi màu nút thành xanh dương
+                  size="lg"
+                  onClick={handlePlayNow}
+                  style={{
+                    position: 'absolute',
+                    top: '70%', // Dịch xuống một chút so với vị trí gốc
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 10,
+                  }}
+                  >
+                  Chơi ngay
+                  </Button>
+                </>
+                )}
+              </Col>
+              </Row>
+              <GameRating slug={slug} />
+              {/* Bảng thông tin chi tiết của game */}
       <Row>
         <Col>
             {/* Game Title */}

@@ -128,7 +128,7 @@ const LoginRegisterModal = () => {
                     <Form.Label>Tên người dùng</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter full name"
+                      placeholder="Nhập tên của bạn"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
@@ -139,7 +139,7 @@ const LoginRegisterModal = () => {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="Enter email"
+                      placeholder="Nhập email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -150,7 +150,7 @@ const LoginRegisterModal = () => {
                     <Form.Label>Mật khẩu</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
@@ -161,7 +161,7 @@ const LoginRegisterModal = () => {
                     <Form.Label>Nhập lại mật khẩu</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Confirm password"
+                      placeholder="Nhập lại mật khẩu"
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
